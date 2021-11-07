@@ -15,8 +15,11 @@ maturin build --release -i %PYTHON% || exit 1
 
 chcp 65001
 
+:: TODO: remove this: not sure what the TEMP was doing, but fails py310
+:: %PYTHON% -m pip install %%w --build %TEMP% || exit 1
+
 FOR %%w IN (%SRC_DIR%\target\wheels\*.whl) DO (
-    %PYTHON% -m pip install %%w --build %TEMP% || exit 1
+    %PYTHON% -m pip install %%w || exit 1
 )
 
 del /F /Q "%PREFIX%\.crates2.json"
