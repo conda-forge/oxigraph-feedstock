@@ -16,19 +16,21 @@ mkdir -p $CARGO_HOME
 
 if [[ $PKG_NAME == "oxigraph-server" ]]; then
     cd $SRC_DIR/server
-    cargo install --root $PREFIX --path .
-fi
-
-if [[ $PKG_NAME == "oxigraph-wikibase" ]]; then
-    cd $SRC_DIR/wikibase
+    cargo-bundle-licenses \
+        --format yaml \
+        --output ${SRC_DIR}/THIRDPARTY.yml
     cargo install --root $PREFIX --path .
 fi
 
 if [[ $PKG_NAME == "pyoxigraph" ]]; then
     cd $SRC_DIR/python
+    cargo-bundle-licenses \
+        --format yaml \
+        --output ${SRC_DIR}/THIRDPARTY.yml
     maturin build --release -i $PYTHON
     $PYTHON -m pip install $SRC_DIR/target/wheels/*.whl
 fi
+
 
 rm -f "${PREFIX}/.crates.toml"
 rm -f "${PREFIX}/.crates2.json"

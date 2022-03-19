@@ -13,6 +13,12 @@ cd %SRC_DIR%\python
 
 maturin build --release -i %PYTHON% || exit 1
 
+:: dump licenses
+cargo-bundle-licenses ^
+    --format yaml ^
+    --output %SRC_DIR%\THIRDPARTY.yml ^
+    || exit 1
+
 chcp 65001
 
 :: TODO: remove this: not sure what the TEMP was doing, but fails py310

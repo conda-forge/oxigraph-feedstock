@@ -5,7 +5,7 @@ Home: https://oxigraph.org
 
 Package license: Apache-2.0 OR MIT
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/oxigraph-feedstock/blob/master/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/oxigraph-feedstock/blob/main/LICENSE.txt)
 
 Summary: a SPARQL database and RDF toolkit
 
@@ -24,8 +24,8 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=master">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=master">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=main">
           </a>
         </summary>
         <table>
@@ -33,22 +33,22 @@ Current build status
           <tbody><tr>
               <td>linux_64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=master&jobName=linux&configuration=linux_64_" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=main&jobName=linux&configuration=linux_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=master&jobName=osx&configuration=osx_64_" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=main&jobName=osx&configuration=osx_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=master&jobName=win&configuration=win_64_" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=13719&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oxigraph-feedstock?branchName=main&jobName=win&configuration=win_64_" alt="variant">
                 </a>
               </td>
             </tr>
@@ -65,7 +65,6 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-oxigraph--server-green.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-oxigraph--wikibase-green.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/oxigraph-wikibase.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/oxigraph-wikibase.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/oxigraph-wikibase.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-pyoxigraph-green.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) |
 
 Installing oxigraph
@@ -78,10 +77,10 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `oxigraph-server, oxigraph-wikibase, pyoxigraph` can be installed with:
+Once the `conda-forge` channel has been enabled, `oxigraph-server, pyoxigraph` can be installed with:
 
 ```
-conda install oxigraph-server oxigraph-wikibase pyoxigraph
+conda install oxigraph-server pyoxigraph
 ```
 
 It is possible to list all of the versions of `oxigraph-server` available on your platform with:
