@@ -7,8 +7,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/oxigraph/oxigraph/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: ab9adc754aa0b46e2661af99df950357ad896203bd06a02cc6bffce53fc95880
+  url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
+  sha256: eb0684a06c08b47f31d1539093f5b6acbf8ababf89153a5a9f4bca1fbeb395e0
 
 build:
   number: {{ build_number }}
