@@ -65,7 +65,6 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-oxigraph--server-green.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-oxigraph--wikibase-green.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/oxigraph-wikibase.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/oxigraph-wikibase.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/oxigraph-wikibase.svg)](https://anaconda.org/conda-forge/oxigraph-wikibase) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-pyoxigraph-green.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) |
 
 Installing oxigraph
@@ -78,10 +77,10 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `oxigraph-server, oxigraph-wikibase, pyoxigraph` can be installed with:
+Once the `conda-forge` channel has been enabled, `oxigraph-server, pyoxigraph` can be installed with:
 
 ```
-conda install oxigraph-server oxigraph-wikibase pyoxigraph
+conda install oxigraph-server pyoxigraph
 ```
 
 It is possible to list all of the versions of `oxigraph-server` available on your platform with:
