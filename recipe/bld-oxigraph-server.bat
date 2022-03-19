@@ -13,6 +13,12 @@ cd %SRC_DIR%\server
 
 cargo build --release || exit 1
 
+:: dump licenses
+cargo-bundle-licenses ^
+    --format yaml ^
+    --output %SRC_DIR%\THIRDPARTY.yml ^
+    || exit 1
+
 if not exist "%SCRIPTS%" mkdir %SCRIPTS%
 
 dir %SRC_DIR%\target\release
