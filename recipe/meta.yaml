@@ -1,5 +1,6 @@
-{% set version = "0.3.2" %}
-{% set build_number = 1 %}
+{% set min_rust = "rust >=1.54" %}
+{% set version = "0.3.5" %}
+{% set build_number = 0 %}
 {% set min_rust = "rust >=1.54" %}
 
 package:
@@ -8,7 +9,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: c6d1aada5892b121cabcb6049fa28273b6a2ac4360b233905f160eb4fcb2d027
+  sha256: 9ed466c34ecce38f5a17981dde986ba728303336c06d43c4d1f7fd7351b99e1a
 
 build:
   number: {{ build_number }}
