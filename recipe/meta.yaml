@@ -27,6 +27,8 @@ outputs:
         - {{ compiler('cxx') }}                  # [unix]
         - {{ compiler('m2w64_c') }}              # [win]
         - {{ compiler('m2w64_cxx') }}            # [win]
+        - clangdev                               # [not osx]
+        - llvmdev                                # [not osx]
         - {{ min_rust }}
         - {{ native }}binutils
         - cargo-bundle-licenses
@@ -51,6 +53,8 @@ outputs:
         - {{ compiler('cxx') }}                  # [unix]
         - {{ compiler('m2w64_c') }}              # [win]
         - {{ compiler('m2w64_cxx') }}            # [win]
+        - clangdev                               # [not osx]
+        - llvmdev                                # [not osx]
         - {{ min_rust }}
         - {{ native }}binutils
         - maturin >=0.11,<0.12
