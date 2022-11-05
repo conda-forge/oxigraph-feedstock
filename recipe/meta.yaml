@@ -29,6 +29,7 @@ outputs:
         - cargo-bundle-licenses
       host:
         - clangdev                               # [not osx]
+        - llvmdev                                # [not osx]
         - openssl
     test:
       commands:
@@ -52,6 +53,7 @@ outputs:
         - cargo-bundle-licenses
       host:
         - clangdev                               # [not osx]
+        - llvmdev                                # [not osx]
         - openssl
         - python
         - pip
