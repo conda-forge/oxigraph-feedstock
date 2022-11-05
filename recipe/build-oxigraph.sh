@@ -3,6 +3,14 @@ set -eux
 
 export RUST_BACKTRACE=1
 
+if test `uname` = "Darwin"; then
+  COMPILER=clang
+else
+  COMPILER=gnu
+fi
+
+export CXXFLAGS="${CXXFLAGS} -std=c++11"
+
 rustc --version
 
 mkdir -p $CARGO_HOME
