@@ -1,6 +1,4 @@
 {% set version = "0.3.9" %}
-{% set native = "" %}  # [unix]
-{% set native = "m2w64_" %}  # [win]
 
 package:
   name: oxigraph
@@ -15,8 +13,10 @@ build:
 
 requirements:
   build:
-    - {{ compiler(native ~ 'c') }}
-    - {{ compiler(native ~ 'cxx') }}
+    - {{ compiler('c') }}                    # [unix]
+    - {{ compiler('cxx') }}                  # [unix]
+    - {{ compiler('m2w64_c') }}              # [win]
+    - {{ compiler('m2w64_cxx') }}            # [win]
     - {{ compiler('rust') }}
 
 outputs:
@@ -27,8 +27,10 @@ outputs:
         - call {{ RECIPE_DIR }}\bld-oxigraph-server.bat  # [win]
     requirements:
       build:
-        - {{ compiler(native ~ 'c') }}
-        - {{ compiler(native ~ 'cxx') }}
+        - {{ compiler('c') }}                    # [unix]
+        - {{ compiler('cxx') }}                  # [unix]
+        - {{ compiler('m2w64_c') }}              # [win]
+        - {{ compiler('m2w64_cxx') }}            # [win]
         - {{ compiler('rust') }}
         - cargo-bundle-licenses
       host:
@@ -46,8 +48,10 @@ outputs:
         - call {{ RECIPE_DIR }}\bld-pyoxigraph.bat  # [win]
     requirements:
       build:
-        - {{ compiler(native ~ 'c') }}
-        - {{ compiler(native ~ 'cxx') }}
+        - {{ compiler('c') }}                    # [unix]
+        - {{ compiler('cxx') }}                  # [unix]
+        - {{ compiler('m2w64_c') }}              # [win]
+        - {{ compiler('m2w64_cxx') }}            # [win]
         - {{ compiler('rust') }}
         - maturin >=0.14,<0.15
         - cargo-bundle-licenses
@@ -61,8 +65,6 @@ outputs:
       run:
         - python
     test:
-      files:
-        - test_licenses.py
       source_files:
         - python/tests
       imports:
