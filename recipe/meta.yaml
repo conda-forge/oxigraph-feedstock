@@ -1,5 +1,5 @@
 {% set version = "0.3.9" %}
-{% set native = "" %}
+{% set native = "" %}  # [unix]
 {% set native = "m2w64_" %}  # [win]
 
 package:
