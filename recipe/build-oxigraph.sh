@@ -14,6 +14,12 @@ rustc --version
 
 mkdir -p "${CARGO_HOME}"
 
+if [[ "$(uname)" == "Darwin" ]]; then
+    # for "no member named 'move' in namespace 'std'"
+    export CXXFLAGS="${CXXFLAGS/-std=c++14/}"
+    export CXXFLAGS="${CXXFLAGS/-std=c++11/}"
+fi
+
 if [[ $PKG_NAME == "oxigraph-server" ]]; then
     cd "${SRC_DIR}/server"
     cargo-bundle-licenses \
