@@ -27,10 +27,16 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
-    # needs `maturin develop` first, seems bad
-    # "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
+    maturin develop --release -m Cargo.toml
+    "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
     maturin build --release --strip --manylinux off --interpreter="${PYTHON}"
-    "${PYTHON}" -m pip install "${SRC_DIR}/target/wheels/*.whl"
+    "${PYTHON}" -m pip install \
+        -vv \
+        --force-reinstall \
+        --no-index \
+        --no-deps \
+        --find-links "${SRC_DIR}/target/wheels" \
+        $PKG_NAME
 fi
 
 rm -f "${PREFIX}/.crates.toml"
