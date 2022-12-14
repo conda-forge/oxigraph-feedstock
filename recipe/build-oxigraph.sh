@@ -29,7 +29,7 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
         --output "${SRC_DIR}/THIRDPARTY.yml"
     # needs `maturin develop` first, seems bad
     # "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
-    maturin build --no-sdist --release --strip --manylinux off --interpreter="${PYTHON}"
+    maturin build --release --strip --manylinux off --interpreter="${PYTHON}"
     "${PYTHON}" -m pip install "${SRC_DIR}/target/wheels/*.whl"
 fi
 
