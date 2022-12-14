@@ -24,13 +24,12 @@ fi
 
 if [[ $PKG_NAME == "pyoxigraph" ]]; then
     cd "${SRC_DIR}/python"
-    export MATURIN_ARGS=--strip --manylinux off --interpreter="${PYTHON}"
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
-    maturin develop -m Cargo.toml $MATURIN_ARGS
+    maturin develop -m Cargo.toml
     "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
-    maturin build $MATURIN_ARGS
+    maturin build -strip --manylinux off --interpreter="${PYTHON}"
     "${PYTHON}" -m pip install \
         -vv \
         --ignore-installed \
