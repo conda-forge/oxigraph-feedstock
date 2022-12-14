@@ -32,6 +32,7 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
     maturin build --release --strip --manylinux off --interpreter="${PYTHON}"
     "${PYTHON}" -m pip install \
         -vv \
+        --ignore-installed \
         --force-reinstall \
         --no-index \
         --no-deps \
