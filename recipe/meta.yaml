@@ -1,6 +1,6 @@
 {% set version = "0.3.9" %}
-{% set build_number = 1 %}
-{% set min_rust = "rust >=1.54" %}
+{% set native = "" %}
+{% set native = "m2w64_" %}  # [win]
 
 package:
   name: oxigraph
@@ -11,25 +11,28 @@ source:
   sha256: 4eb80814c7ae1a00fa9a8003050ef82b6b287dc717b290517f1621013960340d
 
 build:
-  number: {{ build_number }}
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler(native ~ 'c') }}
+    - {{ compiler(native ~ 'cxx') }}
+    - {{ compiler('rust') }}
 
 outputs:
   - name: oxigraph-server
     build:
-      number: {{ build_number }}
       script:
         - bash {{ RECIPE_DIR }}/build-oxigraph.sh  # [unix]
         - call {{ RECIPE_DIR }}\bld-oxigraph-server.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}                    # [unix]
-        - {{ compiler('cxx') }}                  # [unix]
-        - {{ compiler('m2w64_c') }}              # [win]
-        - {{ compiler('m2w64_cxx') }}            # [win]
-        - {{ min_rust }}
+        - {{ compiler(native ~ 'c') }}
+        - {{ compiler(native ~ 'cxx') }}
+        - {{ compiler('rust') }}
         - cargo-bundle-licenses
       host:
-        - clangdev                               # [not osx]
+        - clangdev  # [not osx]
         - openssl
     test:
       commands:
@@ -38,24 +41,23 @@ outputs:
 
   - name: pyoxigraph
     build:
-      number: {{ build_number }}
       script:
         - bash {{ RECIPE_DIR }}/build-oxigraph.sh  # [unix]
         - call {{ RECIPE_DIR }}\bld-pyoxigraph.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}                    # [unix]
-        - {{ compiler('cxx') }}                  # [unix]
-        - {{ compiler('m2w64_c') }}              # [win]
-        - {{ compiler('m2w64_cxx') }}            # [win]
-        - {{ min_rust }}
+        - {{ compiler(native ~ 'c') }}
+        - {{ compiler(native ~ 'cxx') }}
+        - {{ compiler('rust') }}
         - maturin >=0.14,<0.15
         - cargo-bundle-licenses
       host:
-        - clangdev                               # [not osx]
+        - clangdev  # [not osx]
         - openssl
         - python
         - pip
+        - mypy
+        - black
       run:
         - python
     test:
@@ -81,7 +83,6 @@ about:
   summary: a SPARQL database and RDF toolkit
   license: Apache-2.0 OR MIT
   license_file:
-    # first-party
     - LICENSE-APACHE
     - LICENSE-MIT
     - THIRDPARTY.yml
