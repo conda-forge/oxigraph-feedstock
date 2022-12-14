@@ -14,6 +14,13 @@ rustc --version
 
 mkdir -p "${CARGO_HOME}"
 
+if [[ "$(uname)" == "Darwin" ]]; then
+    # for "no member named 'move' in namespace 'std'"
+    export CXXFLAGS="${CXXFLAGS/-std=c++14/}"
+    export CXXFLAGS="${CXXFLAGS/-std=c++17/}"
+    export CXXFLAGS="${CXXFLAGS} -std=c++11"
+fi
+
 if [[ $PKG_NAME == "oxigraph-server" ]]; then
     cd "${SRC_DIR}/server"
     cargo-bundle-licenses \
@@ -27,9 +34,6 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
-    # TODO: figure out how to get these built: perhaps build/install/stub/rebuild/reinstall
-    # maturin develop -m Cargo.toml
-    # "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
     maturin build --strip --manylinux off --interpreter="${PYTHON}"
     "${PYTHON}" -m pip install \
         -vv \
@@ -39,6 +43,8 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
         --no-deps \
         --find-links "${SRC_DIR}/target/wheels" \
         $PKG_NAME
+    find ${SP_DIR}/${PKG_NAME}
+    # python generate_stubs.py pyoxigraph ${SP_DIR}/${PKG_NAME}/__init__.pyi --black
 fi
 
 rm -f "${PREFIX}/.crates.toml"
