@@ -26,10 +26,12 @@ outputs:
         - {{ compiler('cxx') }}                  # [unix]
         - {{ compiler('m2w64_c') }}              # [win]
         - {{ compiler('m2w64_cxx') }}            # [win]
+        - m2w64-binutils                         # [win]
         - {{ min_rust }}
         - cargo-bundle-licenses
       host:
         - clangdev                               # [not osx]
+        - llvmdev                                # [not osx]
         - openssl
     test:
       commands:
@@ -48,11 +50,13 @@ outputs:
         - {{ compiler('cxx') }}                  # [unix]
         - {{ compiler('m2w64_c') }}              # [win]
         - {{ compiler('m2w64_cxx') }}            # [win]
+        - m2w64-binutils                         # [win]
         - {{ min_rust }}
         - maturin >=0.11,<0.12
         - cargo-bundle-licenses
       host:
         - clangdev                               # [not osx]
+        - llvmdev                                # [not osx]
         - openssl
         - python
         - pip
