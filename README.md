@@ -1,11 +1,11 @@
-About oxigraph
-==============
+About oxigraph-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/oxigraph-feedstock/blob/main/LICENSE.txt)
 
 Home: https://oxigraph.org
 
 Package license: Apache-2.0 OR MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/oxigraph-feedstock/blob/main/LICENSE.txt)
 
 Summary: a SPARQL database and RDF toolkit
 
