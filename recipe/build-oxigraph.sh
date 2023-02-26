@@ -19,7 +19,7 @@ if [[ $PKG_NAME == "oxigraph-server" ]]; then
     cargo-bundle-licenses \
         --format yaml \
         --output ${SRC_DIR}/THIRDPARTY.yml
-    cargo install --root $PREFIX --path .
+    cargo install --locked --root "$PREFIX" --path .
 fi
 
 if [[ $PKG_NAME == "pyoxigraph" ]]; then
