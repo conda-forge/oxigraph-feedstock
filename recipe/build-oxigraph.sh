@@ -30,11 +30,11 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     maturin build --no-sdist --release --strip --manylinux off -i "${PYTHON}"
     "${PYTHON}" -m pip debug --verbose
     "${PYTHON}" -m pip install pyoxigraph -vv --no-index --find-links "${SRC_DIR}/target/wheels"
-    if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
-        echo "${PY_VER} does not have ast.unparse"
-    else
-        "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
-    fi
+    # if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
+    #     echo "${PY_VER} does not have ast.unparse"
+    # else
+    #     "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
+    # fi
 fi
 
 
