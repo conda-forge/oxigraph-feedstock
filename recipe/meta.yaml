@@ -1,5 +1,5 @@
 {% set min_rust = "rust >=1.54" %}
-{% set version = "0.3.12" %}
+{% set version = "0.3.13" %}
 {% set build_number = 0 %}
 {% set min_rust = "rust >=1.54" %}
 
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: 79b55e23a5dcf2540420c84e9d81bae9c139cbb9351f075c365c91ab81ac22cc
+  sha256: 187cdf0b1685f7ff7d16d69e2c696a20826f7d5da2835f8203a39da6f53d6ec1
 
 build:
   number: {{ build_number }}
@@ -53,7 +53,7 @@ outputs:
         - {{ compiler('m2w64_cxx') }}            # [win]
         - m2w64-binutils                         # [win]
         - {{ min_rust }}
-        - maturin >=0.11,<0.12
+        - maturin >=0.14.0,<0.15.0
         - cargo-bundle-licenses
       host:
         - clangdev                               # [not osx]
