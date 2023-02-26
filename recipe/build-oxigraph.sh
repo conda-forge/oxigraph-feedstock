@@ -27,7 +27,8 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
     cargo-bundle-licenses \
         --format yaml \
         --output ${SRC_DIR}/THIRDPARTY.yml
-    maturin build --release -i $PYTHON
+    maturin build --release -i $PYTHON --features abi3
+    $PYTHON -m pip debug --verbose
     $PYTHON -m pip install -vv --no-index --find-links=$SRC_DIR/target/wheels pyoxigraph
     $PYTHON generate_stubs.py pyoxigraph pyoxigraph.pyi --black
 fi
