@@ -58,9 +58,10 @@ outputs:
       host:
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
+        - black
         - openssl
-        - python
         - pip
+        - python
       run:
         - python
     test:
@@ -74,7 +75,9 @@ outputs:
         - pip check
         - cd python/tests
         - pytest -vv --cov pyoxigraph --cov-report term-missing:skip-covered --cov-fail-under 100
+        - mypy -m pyoxigraph
       requires:
+        - mypy
         - pip
         - pytest-cov
         - ruamel_yaml

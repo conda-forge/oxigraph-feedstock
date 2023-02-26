@@ -28,7 +28,8 @@ if [[ $PKG_NAME == "pyoxigraph" ]]; then
         --format yaml \
         --output ${SRC_DIR}/THIRDPARTY.yml
     maturin build --release -i $PYTHON
-    $PYTHON -m pip install $SRC_DIR/target/wheels/*.whl
+    $PYTHON -m pip install -vv --no-index --find-links=$SRC_DIR/target/wheels pyoxigraph
+    $PYTHON generate_stubs.py pyoxigraph pyoxigraph.pyi --black
 fi
 
 
