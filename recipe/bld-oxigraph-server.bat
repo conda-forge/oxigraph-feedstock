@@ -11,19 +11,13 @@ rustc --version
 
 cd %SRC_DIR%\server
 
-cargo build --release || exit 1
+cargo install --locked --root "%PREFIX%" --path . || goto :error
 
 :: dump licenses
 cargo-bundle-licenses ^
     --format yaml ^
     --output %SRC_DIR%\THIRDPARTY.yml ^
     || exit 1
-
-if not exist "%SCRIPTS%" mkdir %SCRIPTS%
-
-dir %SRC_DIR%\target\release
-
-copy %SRC_DIR%\target\release\oxigraph_server.exe %SCRIPTS% || exit 1
 
 del /F /Q "%PREFIX%\.crates2.json"
 del /F /Q "%PREFIX%\.crates.toml"
