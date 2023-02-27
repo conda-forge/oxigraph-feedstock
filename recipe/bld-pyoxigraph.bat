@@ -32,4 +32,6 @@ if "%PY_VER%" == "3.8" goto :EOF
 "%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\pyoxigraph.pyi" ^
    || exit 1
 
+echo "" >> "%SP_DIR%\pyoxigraph\py.typed"
+
 type "%SP_DIR%\pyoxigraph\pyoxigraph.pyi"
