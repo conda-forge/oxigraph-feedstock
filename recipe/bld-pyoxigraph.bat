@@ -29,9 +29,7 @@ chcp 65001
 if "%PY_VER%" == "3.7" goto :EOF
 if "%PY_VER%" == "3.8" goto :EOF
 
-"%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\pyoxigraph.pyi" ^
+"%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\__init__.pyi" ^
    || exit 1
 
-echo "" >> "%SP_DIR%\pyoxigraph\py.typed"
-
-type "%SP_DIR%\pyoxigraph\pyoxigraph.pyi"
+echo "" >> "%SP_DIR%\pyoxigraph\py.typed" || exit 1

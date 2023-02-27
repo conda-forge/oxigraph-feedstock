@@ -34,6 +34,6 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     else
         "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
         echo "" >> "$SP_DIR/pyoxigraph/py.typed"
-        cat "$SP_DIR/pyoxigraph/__init__.pyi"
+        ls "$SP_DIR/pyoxigraph/__init__.pyi"
     fi
 fi
