@@ -26,8 +26,8 @@ chcp 65001
     || exit 1
 
 :: doesn't have ast.unparse
-:: if "%PY_VER%" == "3.7" goto :EOF
-:: if "%PY_VER%" == "3.8" goto :EOF
+if "%PY_VER%" == "3.7" goto :EOF
+if "%PY_VER%" == "3.8" goto :EOF
 
-:: "%PYTHON%" generate_stubs.py pyoxigraph pyoxigraph.pyi --black ^
-::    || exit 1
+"%PYTHON%" generate_stubs.py pyoxigraph pyoxigraph.pyi ^
+   || exit 1

@@ -33,6 +33,6 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
         echo "${PY_VER} does not have ast.unparse"
     else
-        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi" --black
+        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
     fi
 fi
