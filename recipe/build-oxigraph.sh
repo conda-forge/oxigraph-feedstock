@@ -29,14 +29,10 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         --output "${SRC_DIR}/THIRDPARTY.yml"
     maturin build --release --strip --manylinux off -i "${PYTHON}"
     "${PYTHON}" -m pip debug --verbose
-    "${PYTHON}" -m pip install pyoxigraph -vv --no-index --find-links "${SRC_DIR}/target/wheels"
-    # if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
-    #     echo "${PY_VER} does not have ast.unparse"
-    # else
-    #     "${PYTHON}" generate_stubs.py pyoxigraph pyoxigraph.pyi --black
-    # fi
+    "${PYTHON}" -m pip install pyoxigraph -vv --no-deps --no-index --find-links "${SRC_DIR}/target/wheels"
+    if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
+        echo "${PY_VER} does not have ast.unparse"
+    else
+        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi" --black
+    fi
 fi
-
-
-rm -f "${PREFIX}/.crates.toml"
-rm -f "${PREFIX}/.crates2.json"
