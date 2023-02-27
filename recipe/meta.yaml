@@ -1,5 +1,6 @@
-{% set version = "0.3.2" %}
-{% set build_number = 2 %}
+{% set min_rust = "rust >=1.54" %}
+{% set version = "0.3.13" %}
+{% set build_number = 0 %}
 {% set min_rust = "rust >=1.54" %}
 
 package:
@@ -8,7 +9,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: c6d1aada5892b121cabcb6049fa28273b6a2ac4360b233905f160eb4fcb2d027
+  sha256: 187cdf0b1685f7ff7d16d69e2c696a20826f7d5da2835f8203a39da6f53d6ec1
 
 build:
   number: {{ build_number }}
@@ -52,14 +53,14 @@ outputs:
         - {{ compiler('m2w64_cxx') }}            # [win]
         - m2w64-binutils                         # [win]
         - {{ min_rust }}
-        - maturin >=0.11,<0.12
+        - maturin >=0.14.0,<0.15.0
         - cargo-bundle-licenses
       host:
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
         - openssl
-        - python
         - pip
+        - python
       run:
         - python
     test:
@@ -73,7 +74,9 @@ outputs:
         - pip check
         - cd python/tests
         - pytest -vv --cov pyoxigraph --cov-report term-missing:skip-covered --cov-fail-under 100
+        - mypy -m pyoxigraph  # [py>=39]
       requires:
+        - mypy
         - pip
         - pytest-cov
         - ruamel_yaml
