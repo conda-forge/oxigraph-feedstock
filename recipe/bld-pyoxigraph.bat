@@ -11,7 +11,7 @@ rustc --version
 
 cd "%SRC_DIR%\python"
 
-maturin build --no-sdist --release --strip -i "%PYTHON%" ^
+maturin build --release --strip -i "%PYTHON%" ^
     || exit 1
 
 :: dump licenses

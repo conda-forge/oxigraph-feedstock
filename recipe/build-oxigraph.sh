@@ -27,7 +27,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
-    maturin build --no-sdist --release --strip --manylinux off -i "${PYTHON}"
+    maturin build --release --strip --manylinux off -i "${PYTHON}"
     "${PYTHON}" -m pip debug --verbose
     "${PYTHON}" -m pip install pyoxigraph -vv --no-index --find-links "${SRC_DIR}/target/wheels"
     # if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
