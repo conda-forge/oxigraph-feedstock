@@ -1,7 +1,6 @@
-{% set min_rust = "rust >=1.54" %}
 {% set version = "0.3.13" %}
-{% set build_number = 0 %}
-{% set min_rust = "rust >=1.54" %}
+{% set build_number = 1 %}
+{% set min_rust = "rust >=1.60" %}
 
 package:
   name: oxigraph
@@ -30,10 +29,10 @@ outputs:
         - m2w64-binutils                         # [win]
         - {{ min_rust }}
         - cargo-bundle-licenses
-      host:
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
-        - openssl
+      run:
+        - ca-certificates
     test:
       commands:
         - oxigraph_server --version
@@ -55,14 +54,14 @@ outputs:
         - {{ min_rust }}
         - maturin >=0.14.0,<0.15.0
         - cargo-bundle-licenses
-      host:
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
-        - openssl
+      host:
         - pip
         - python
       run:
         - python
+        - ca-certificates
     test:
       files:
         - test_licenses.py
