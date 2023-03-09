@@ -98,4 +98,5 @@ about:
 extra:
   feedstock-name: oxigraph
   recipe-maintainers:
+    - Tpt
     - bollwyvl
