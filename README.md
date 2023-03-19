@@ -181,5 +181,6 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@Tpt](https://github.com/Tpt/)
 * [@bollwyvl](https://github.com/bollwyvl/)
 
