@@ -1,6 +1,6 @@
-{% set version = "0.3.13" %}
-{% set build_number = 1 %}
 {% set min_rust = "rust >=1.60" %}
+{% set version = "0.3.14" %}
+{% set build_number = 0 %}
 
 package:
   name: oxigraph
@@ -8,7 +8,9 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: 187cdf0b1685f7ff7d16d69e2c696a20826f7d5da2835f8203a39da6f53d6ec1
+  sha256: d0bcff61bd3aaa046568657652c6871208359e925d1d2c5eb1fd42af2543519b
+  patches:
+    - Python__Fixes_the_secondary_test_on_Windows.patch # TODO: will be integrated into 0.3.15
 
 build:
   number: {{ build_number }}

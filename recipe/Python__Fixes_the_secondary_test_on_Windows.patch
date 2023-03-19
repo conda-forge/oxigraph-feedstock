@@ -1,0 +1,17 @@
+Subject: [PATCH] Python: Fixes the secondary test on Windows
+---
+Index: python/tests/test_store.py
+<+>UTF-8
+===================================================================
+diff --git a/python/tests/test_store.py b/python/tests/test_store.py
+--- a/python/tests/test_store.py	(revision 4523edebe62c13ca3a53215d9349a4e4f9e62c35)
++++ b/python/tests/test_store.py	(revision ec6477534303ed9f0a95370dde87bc2dbb978a01)
+@@ -367,6 +367,8 @@
+             store.remove(quad)
+             store.flush()
+             self.assertEqual(list(secondary_store), [])
++            del secondary_store
++            del store
+ 
+ 
+ if __name__ == "__main__":
