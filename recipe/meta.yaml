@@ -1,7 +1,5 @@
-{% set min_rust = "rust >=1.60" %}
-{% set min_rust = "rust >=1.60" %}
 {% set version = "0.3.15" %}
-{% set build_number = 0 %}
+{% set min_rust = "rust >=1.60" %}
 
 package:
   name: oxigraph
@@ -10,16 +8,13 @@ package:
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
   sha256: 4dd23d86c9a8f233f0a665cc5dc2cc7e9a4d2af63917bb17f0ea38a8aee50dbf
-  patches:
-    - Python__Fixes_the_secondary_test_on_Windows.patch # TODO: will be integrated into 0.3.15
 
 build:
-  number: {{ build_number }}
+  number: 0
 
 outputs:
   - name: oxigraph-server
     build:
-      number: {{ build_number }}
       script:
         - bash {{ RECIPE_DIR }}/build-oxigraph.sh  # [unix]
         - call {{ RECIPE_DIR }}\bld-oxigraph-server.bat  # [win]
@@ -43,7 +38,6 @@ outputs:
 
   - name: pyoxigraph
     build:
-      number: {{ build_number }}
       script:
         - bash {{ RECIPE_DIR }}/build-oxigraph.sh  # [unix]
         - call {{ RECIPE_DIR }}\bld-pyoxigraph.bat  # [win]
