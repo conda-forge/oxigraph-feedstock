@@ -1,8 +1,5 @@
 {% set min_rust = "rust >=1.60" %}
-{% set min_rust = "rust >=1.60" %}
-{% set min_rust = "rust >=1.60" %}
 {% set version = "0.3.18" %}
-{% set min_rust = "rust >=1.60" %}
 
 package:
   name: oxigraph
