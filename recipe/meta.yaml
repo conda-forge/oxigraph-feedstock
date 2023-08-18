@@ -1,6 +1,5 @@
-{% set min_rust = "rust >=1.60" %}
-{% set min_rust = "rust >=1.60" %}
 {% set version = "0.3.19" %}
+{% set min_rust = "rust >=1.60" %}
 
 package:
   name: oxigraph
@@ -50,7 +49,7 @@ outputs:
         - {{ compiler('m2w64_cxx') }}            # [win]
         - m2w64-binutils                         # [win]
         - {{ min_rust }}
-        - maturin >=0.14.0,<0.15.0
+        - maturin >=1.0,<2.0
         - cargo-bundle-licenses
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
@@ -70,8 +69,8 @@ outputs:
       commands:
         - pip check
         - cd python/tests
-        - pytest -vv --cov pyoxigraph --cov-report term-missing:skip-covered --cov-fail-under 100
-        - mypy -m pyoxigraph  # [py>=39]
+        - pytest -vv --cov=pyoxigraph --cov-report=term-missing:skip-covered --cov-fail-under=100
+        - mypy -p pyoxigraph  # [py>=39]
       requires:
         - mypy
         - pip
