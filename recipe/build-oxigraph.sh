@@ -27,8 +27,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
-    maturin build --release --strip --manylinux off -i "${PYTHON}"
-    "${PYTHON}" -m pip install pyoxigraph -vv --no-deps --no-index --find-links "${SRC_DIR}/target/wheels"
+    "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
     if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
         echo "${PY_VER} does not have ast.unparse"
     else
