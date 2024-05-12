@@ -4,6 +4,10 @@ c_compiler:
 - clang
 c_compiler_version:
 - '16'
+c_stdlib:
+- macosx_deployment_target
+c_stdlib_version:
+- '10.14'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -23,6 +27,7 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.8.* *_cpython
+- 3.9.* *_73_pypy
 - 3.9.* *_cpython
 target_platform:
 - osx-64
