@@ -28,6 +28,9 @@ outputs:
         - m2w64-binutils                         # [win]
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
+        - openssl                                # [build_platform != target_platform]
+        - rocksdb                                # [build_platform != target_platform]
+        - zstd                                   # [build_platform != target_platform]
         - {{ compiler("rust") }}
         - cargo-bundle-licenses
         - pkg-config

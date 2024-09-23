@@ -6,11 +6,13 @@ export RUST_BACKTRACE=1
 export OPENSSL_DIR=$PREFIX
 export OPENSSL_NO_VENDOR=1
 
-# Required for cross-compiling with pkg-config
-export PKG_CONFIG_SYSROOT_DIR=$PREFIX
-export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+if [ "${target_platform}" = "osx-arm64" ]; then
+    # Required for cross-compiling with pkg-config
+    export PKG_CONFIG_SYSROOT_DIR=$PREFIX
+    export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
 
-export CARGO_BUILD_RUSTFLAGS="$CARGO_BUILD_RUSTFLAGS -L all=$PREFIX/lib"
+    export CARGO_BUILD_RUSTFLAGS="$CARGO_BUILD_RUSTFLAGS -L all=$PREFIX/lib"
+fi
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 
 export MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
@@ -44,7 +46,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
 
     "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
 
-    if [ ${PY_VER} == "3.7" ] || [ ${PY_VER} == "3.8" ]; then
+    if [ "${PY_VER}" == "3.7" ] || [ "${PY_VER}" == "3.8" ]; then
         echo "${PY_VER} does not have ast.unparse"
     else
         "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
