@@ -6,7 +6,7 @@ export RUST_BACKTRACE=1
 export OPENSSL_DIR=$PREFIX
 export OPENSSL_NO_VENDOR=1
 
-if [ "${target_platform}" = "osx-arm64" ]; then
+if [[ "${target_platform}" == "osx-arm64" ]]; then
     # Required for cross-compiling with pkg-config
     export PKG_CONFIG_SYSROOT_DIR=$PREFIX
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
