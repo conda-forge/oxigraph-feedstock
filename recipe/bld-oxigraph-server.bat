@@ -3,6 +3,8 @@
 set PYTHONIOENCODING="UTF-8"
 set PYTHONUTF8=1
 set RUST_BACKTRACE=1
+set OPENSSL_NO_VENDOR=1
+set "OPENSSL_DIR=%LIBRARY_PREFIX%"
 set TEMP=%SRC_DIR%\tmpbuild_%PY_VER%
 
 mkdir %TEMP%
@@ -11,7 +13,13 @@ rustc --version
 
 cd %SRC_DIR%\server
 
-cargo install --locked --root "%PREFIX%" --path . || goto :error
+cargo install ^
+    --locked ^
+    --no-track ^
+    --path . ^
+    --profile release ^
+    --root "%LIBRARY_PREFIX%" ^
+    || exit 1
 
 :: dump licenses
 cargo-bundle-licenses ^
