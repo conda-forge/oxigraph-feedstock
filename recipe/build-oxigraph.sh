@@ -5,6 +5,7 @@ export RUST_BACKTRACE=1
 
 export OPENSSL_DIR=$PREFIX
 export OPENSSL_NO_VENDOR=1
+export ROCKSDB_DIR=$PREFIX
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     # Required for cross-compiling with pkg-config
