@@ -13,7 +13,7 @@ rustc --version
 mkdir -p "${CARGO_HOME}"
 
 if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
-    cd "${SRC_DIR}/server"
+    cd "${SRC_DIR}/cli"
 
     cargo-bundle-licenses \
         --format yaml \
