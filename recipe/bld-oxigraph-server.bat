@@ -12,21 +12,21 @@ mkdir "%TEMP%"
 
 rustc --version
 
+cargo install ^
+    --locked ^
+    --no-track ^
+    --path server ^
+    --profile release ^
+    --features rocksdb-pkg-config ^
+    --root "%LIBRARY_PREFIX%" ^
+    || exit 1
+
 cd "%SRC_DIR%\server"
 
 :: dump licenses
 cargo-bundle-licenses ^
     --format yaml ^
     --output "%SRC_DIR%\THIRDPARTY.yml" ^
-    || exit 1
-
-cargo install ^
-    --locked ^
-    --no-track ^
-    --path . ^
-    --profile release ^
-    --features rocksdb-pkg-config ^
-    --root "%LIBRARY_PREFIX%" ^
     || exit 1
 
 
