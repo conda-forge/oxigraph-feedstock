@@ -34,10 +34,12 @@ outputs:
       host:
         - openssl
         - rocksdb
+        - zstd
       run:
         - ca-certificates
         - openssl
         - rocksdb
+        - zstd
     test:
       commands:
         - oxigraph --version
@@ -71,11 +73,13 @@ outputs:
         - pip
         - python
         - rocksdb
+        - zstd
       run:
         - ca-certificates
         - openssl
         - python
         - rocksdb
+        - zstd
     test:
       files:
         - test_licenses.py
