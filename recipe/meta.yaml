@@ -30,11 +30,14 @@ outputs:
         - llvmdev                                # [not osx]
         - {{ compiler("rust") }}
         - cargo-bundle-licenses
+        - pkg-config
       host:
         - openssl
+        - rocksdb
       run:
         - ca-certificates
         - openssl
+        - rocksdb
     test:
       commands:
         - oxigraph --version
@@ -61,15 +64,18 @@ outputs:
         - {{ compiler("rust") }}
         - maturin >=1.0,<2.0
         - cargo-bundle-licenses
+        - pkg-config
       host:
         - maturin >=1.0,<2.0
         - openssl
         - pip
         - python
+        - rocksdb
       run:
         - ca-certificates
         - openssl
         - python
+        - rocksdb
     test:
       files:
         - test_licenses.py

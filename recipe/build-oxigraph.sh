@@ -6,6 +6,7 @@ export RUST_BACKTRACE=1
 export OPENSSL_DIR=$PREFIX
 export OPENSSL_NO_VENDOR=1
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
+export MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
 
 rustc --version
 
@@ -13,6 +14,7 @@ mkdir -p "${CARGO_HOME}"
 
 if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
     cd "${SRC_DIR}/server"
+
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
@@ -21,12 +23,14 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
         --locked \
         --no-track \
         --profile release \
+        --features rocksdb-pkg-config \
         --root "${PREFIX}" \
         --path .
 fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     cd "${SRC_DIR}/python"
+
     cargo-bundle-licenses \
         --format yaml \
         --output "${SRC_DIR}/THIRDPARTY.yml"
