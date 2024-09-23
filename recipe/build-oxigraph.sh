@@ -5,7 +5,14 @@ export RUST_BACKTRACE=1
 
 export OPENSSL_DIR=$PREFIX
 export OPENSSL_NO_VENDOR=1
+
+# Required for cross-compiling with pkg-config
+export PKG_CONFIG_SYSROOT_DIR=$PREFIX
+export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+
+export CARGO_BUILD_RUSTFLAGS="$CARGO_BUILD_RUSTFLAGS -L all=$PREFIX/lib"
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
+
 export MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
 
 rustc --version
