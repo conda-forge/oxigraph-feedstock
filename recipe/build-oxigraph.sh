@@ -10,9 +10,8 @@ export ROCKSDB_DIR=$PREFIX
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     # Required for cross-compiling with pkg-config
     export PKG_CONFIG_SYSROOT_DIR=$PREFIX
+    export PKG_CONFIG_LIBDIR=$PREFIX/lib
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
-
-    export CARGO_BUILD_RUSTFLAGS="$CARGO_BUILD_RUSTFLAGS -L all=$PREFIX/lib"
 fi
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 
