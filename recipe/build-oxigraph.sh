@@ -47,7 +47,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
 
     "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
 
-    if [ "${PY_VER}" == "3.7" ] || [ "${PY_VER}" == "3.8" ]; then
+    if [ "${PY_VER}" == "3.8" ]; then
         echo "${PY_VER} does not have ast.unparse"
     else
         "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"

@@ -37,7 +37,6 @@ chcp 65001
     || exit 1
 
 :: doesn't have ast.unparse
-if "%PY_VER%" == "3.7" goto :EOF
 if "%PY_VER%" == "3.8" goto :EOF
 :: can't run non-native
 if %target_platform% == "osx-arm64" goto :EOF
