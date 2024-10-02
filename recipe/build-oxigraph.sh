@@ -12,7 +12,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
     export PKG_CONFIG_SYSROOT_DIR=$PREFIX
     export PKG_CONFIG_LIBDIR=$PREFIX/lib
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
-    export CARGO_BUILD_RUSTFLAGS="$CARGO_BUILD_RUSTFLAGS -L all=$PREFIX/lib"
+    export PKG_CONFIG_PATH_aarch64-apple-darwin=$PREFIX/lib/pkgconfig
 fi
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 
