@@ -1,4 +1,4 @@
-{% set version = "0.4.0" %}
+{% set version = "0.4.1" %}
 
 package:
   name: oxigraph
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: 360b364f1aab5837797599460519c37cd9c9a3fcfb0b0383914ce311b77a4e86
+  sha256: c7fe9f5946397eaf7c74408681a595ab8fbb49cd472ac7becc3082a1a74d5ba1
 
 build:
   number: 0
@@ -32,19 +32,18 @@ outputs:
         - clangdev                               # [not osx]
         - llvmdev                                # [not osx]
         - openssl                                # [build_platform != target_platform]
-        - rocksdb                                # [build_platform != target_platform]
         - zstd                                   # [build_platform != target_platform]
         - {{ compiler("rust") }}
         - cargo-bundle-licenses
         - pkg-config
       host:
         - openssl
-        - rocksdb
+        - rocksdb  # [not win or target_platform == "osx-arm64"]
         - zstd
       run:
         - ca-certificates
         - openssl
-        - rocksdb
+        - rocksdb  # [not win or target_platform == "osx-arm64"]
         - zstd
     test:
       commands:
@@ -70,24 +69,23 @@ outputs:
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - openssl                                # [build_platform != target_platform]
         - python                                 # [build_platform != target_platform]
-        - rocksdb                                # [build_platform != target_platform]
         - zstd                                   # [build_platform != target_platform]
         - {{ compiler("rust") }}
         - maturin >=1.0,<2.0
         - cargo-bundle-licenses
         - pkg-config
       host:
+        - rocksdb  # [not win or target_platform == "osx-arm64"]
         - maturin >=1.0,<2.0
         - openssl
         - pip
         - python
-        - rocksdb
         - zstd
       run:
+        - rocksdb  # [not win or target_platform == "osx-arm64"]
         - ca-certificates
         - openssl
         - python
-        - rocksdb
         - zstd
     test:
       files:

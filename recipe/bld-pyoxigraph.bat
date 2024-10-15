@@ -5,9 +5,7 @@ set PYTHONUTF8=1
 set RUST_BACKTRACE=1
 set OPENSSL_NO_VENDOR=1
 set "OPENSSL_DIR=%LIBRARY_PREFIX%"
-set "ROCKSDB_DIR=%LIBRARY_PREFIX%"
 set "TEMP=%SRC_DIR%\tmpbuild_%PY_VER%"
-set MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
 
 mkdir "%TEMP%"
 
@@ -35,11 +33,6 @@ chcp 65001
     --no-index \
     --find-links "%SRC_DIR%\target\wheels" ^
     || exit 1
-
-:: doesn't have ast.unparse
-if "%PY_VER%" == "3.8" goto :EOF
-:: can't run non-native
-if %target_platform% == "osx-arm64" goto :EOF
 
 "%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\__init__.pyi" ^
    || exit 1

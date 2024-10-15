@@ -7,7 +7,6 @@ set OPENSSL_NO_VENDOR=1
 set "OPENSSL_DIR=%LIBRARY_PREFIX%"
 set "ROCKSDB_DIR=%LIBRARY_PREFIX%"
 set "TEMP=%SRC_DIR%\tmpbuild_%PY_VER%"
-set MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
 
 mkdir "%TEMP%"
 
@@ -18,7 +17,6 @@ cargo install ^
     --no-track ^
     --path cli ^
     --profile release ^
-    --features rocksdb-pkg-config ^
     --root "%LIBRARY_PREFIX%" ^
     || exit 1
 
@@ -29,6 +27,3 @@ cargo-bundle-licenses ^
     --format yaml ^
     --output "%SRC_DIR%\THIRDPARTY.yml" ^
     || exit 1
-
-del /F /Q "%PREFIX%\.crates2.json"
-del /F /Q "%PREFIX%\.crates.toml"

@@ -7,16 +7,18 @@ export OPENSSL_DIR=$PREFIX
 export OPENSSL_NO_VENDOR=1
 export ROCKSDB_DIR=$PREFIX
 
-if [[ "${target_platform}" == "osx-arm64" ]]; then
-    # Required for cross-compiling with pkg-config
-    export PKG_CONFIG_SYSROOT_DIR=$PREFIX
-    export PKG_CONFIG_LIBDIR=$PREFIX/lib
-    export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
-    export PKG_CONFIG_PATH_aarch64-apple-darwin=$PREFIX/lib/pkgconfig
-fi
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 
-export MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
+
+if [[ "${target_platform}" == "osx-arm64" ]]; then
+    echo "will NOT use pkgconfig for rocksdb on ${target_platform}"
+elif [[ "${target_platform}" == "win-64" ]]; then
+    echo "will NOT use pkgconfig for rocksdb on ${target_platform}"
+else
+    echo "WILL use pkgconfig for rocksdb on ${target_platform}"
+    export MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
+    export CARGO_FEATURE_ROCKSDB_PKG_CONFIG=1
+fi
 
 rustc --version
 
@@ -47,11 +49,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
 
     "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
 
-    if [ "${PY_VER}" == "3.8" ]; then
-        echo "${PY_VER} does not have ast.unparse"
-    else
-        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
-        echo "" >> "$SP_DIR/pyoxigraph/py.typed"
-        ls "$SP_DIR/pyoxigraph/__init__.pyi"
-    fi
+    "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
+    echo "" >> "$SP_DIR/pyoxigraph/py.typed"
+    ls "$SP_DIR/pyoxigraph/__init__.pyi"
 fi
