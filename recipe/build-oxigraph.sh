@@ -12,8 +12,7 @@ export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     echo "will NOT use pkgconfig for rocksdb on ${target_platform}"
-elif [[ "${target_platform}" == "win-64" ]]; then
-    echo "will NOT use pkgconfig for rocksdb on ${target_platform}"
+    export ROCKSDB_NO_PKG_CONFIG=1
 else
     echo "WILL use pkgconfig for rocksdb on ${target_platform}"
     export MATURIN_SETUP_ARGS=--features=rocksdb-pkg-config
@@ -35,7 +34,6 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
         --locked \
         --no-track \
         --profile release \
-        --features rocksdb-pkg-config \
         --root "${PREFIX}" \
         --path .
 fi

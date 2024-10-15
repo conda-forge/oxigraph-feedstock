@@ -13,6 +13,8 @@ rustc --version
 
 cd "%SRC_DIR%\python"
 
+set ROCKSDB_NO_PKG_CONFIG=1
+
 :: dump licenses
 cargo-bundle-licenses ^
     --format yaml ^
