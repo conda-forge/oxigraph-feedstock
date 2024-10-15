@@ -29,10 +29,10 @@ maturin build ^
 
 chcp 65001
 
-"%PYTHON%" -m pip install \
-    pyoxigraph \
-    -vv \
-    --no-index \
+"%PYTHON%" -m pip install ^
+    pyoxigraph ^
+    -vv ^
+    --no-index ^
     --find-links "%SRC_DIR%\target\wheels" ^
     || exit 1
 
