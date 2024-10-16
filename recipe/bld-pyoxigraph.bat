@@ -14,23 +14,12 @@ cargo-bundle-licenses ^
     --output "%SRC_DIR%\THIRDPARTY.yml" ^
     || exit 1
 
-maturin build ^
-    --release ^
-    --strip ^
-    -m python\Cargo.toml ^
-    -i "%PYTHON%" ^
-    || exit 1
+cd "%SRC_DIR%\python"
+
+%PYTHON% -m pip install . -vv --no-build-isolation --no-deps ^
+   || exit 1
 
 chcp 65001
-
-"%PYTHON%" -m pip install ^
-    pyoxigraph ^
-    -vv ^
-    --no-index ^
-    --find-links "target\wheels" ^
-    || exit 1
-
-cd "%SRC_DIR%\python"
 
 "%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\__init__.pyi" ^
    || exit 1
