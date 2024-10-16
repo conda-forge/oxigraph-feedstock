@@ -19,31 +19,28 @@ outputs:
         - call {{ RECIPE_DIR }}\bld-oxigraph-server.bat  # [win]
     requirements:
       build:
-        - {{ compiler("c") }}                    # [unix]
-        - {{ stdlib("c") }}                      # [unix]
-        - {{ compiler("cxx") }}                  # [unix]
-        - {{ compiler("m2w64_c") }}              # [win]
-        - {{ compiler("m2w64_cxx") }}            # [win]
-        - {{ stdlib("m2w64_c") }}                # [win]
-        - libclang                               # [win]
-        - llvm                                   # [win]
-        - llvm-tools                             # [win]
-        - m2w64-binutils                         # [win]
-        - clangdev                               # [not osx]
-        - llvmdev                                # [not osx]
-        - openssl                                # [build_platform != target_platform]
-        - zstd                                   # [build_platform != target_platform]
+        - libclang                  # [win]
+        - llvm                      # [win]
+        - llvm-tools                # [win]
+        - m2w64-binutils            # [win]
+        - clangdev                  # [not osx]
+        - llvmdev                   # [not osx]
+        - openssl                   # [build_platform != target_platform]
+        - zstd                      # [build_platform != target_platform]
+        - pkg-config                # [not (win or build_platform != target_platform)]
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
         - {{ compiler("rust") }}
+        - {{ stdlib("c") }}
         - cargo-bundle-licenses
-        - pkg-config
       host:
+        - rocksdb                   # [not (win or build_platform != target_platform)]
         - openssl
-        - rocksdb  # [not win or target_platform == "osx-arm64"]
         - zstd
       run:
+        - rocksdb                   # [not (win or build_platform != target_platform)]
         - ca-certificates
         - openssl
-        - rocksdb  # [not win or target_platform == "osx-arm64"]
         - zstd
     test:
       commands:
@@ -57,32 +54,28 @@ outputs:
         - call {{ RECIPE_DIR }}\bld-pyoxigraph.bat  # [win]
     requirements:
       build:
-        - {{ compiler("c") }}                    # [unix]
-        - {{ stdlib("c") }}                      # [unix]
-        - {{ compiler("cxx") }}                  # [unix]
-        - {{ compiler("m2w64_c") }}              # [win]
-        - {{ stdlib("m2w64_c") }}                # [win]
-        - {{ compiler("m2w64_cxx") }}            # [win]
-        - m2w64-binutils                         # [win]
-        - clangdev                               # [not osx]
-        - llvmdev                                # [not osx]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - openssl                                # [build_platform != target_platform]
-        - python                                 # [build_platform != target_platform]
-        - zstd                                   # [build_platform != target_platform]
+        - clangdev                            # [not osx]
+        - llvmdev                             # [not osx]
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - openssl                             # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
+        - zstd                                # [build_platform != target_platform]
+        - pkg-config                          # [not (win or build_platform != target_platform)]
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
         - {{ compiler("rust") }}
-        - maturin >=1.0,<2.0
+        - {{ stdlib("c") }}
         - cargo-bundle-licenses
-        - pkg-config
+        - maturin >=1.0,<2.0
       host:
-        - rocksdb  # [not win or target_platform == "osx-arm64"]
+        - rocksdb                             # [not (win or build_platform != target_platform)]
         - maturin >=1.0,<2.0
         - openssl
         - pip
         - python
         - zstd
       run:
-        - rocksdb  # [not win or target_platform == "osx-arm64"]
+        - rocksdb                             # [not (win or build_platform != target_platform)]
         - ca-certificates
         - openssl
         - python
@@ -97,22 +90,20 @@ outputs:
       commands:
         - pip check
         - cd python/tests
-        - pytest -vv --cov=pyoxigraph --cov-report=term-missing:skip-covered --cov-fail-under=100
-        - mypy -p pyoxigraph  # [py>=39]
+        - coverage run --source pyoxigraph --branch -m pytest -vv --color=yes --tb=long
+        - coverage report --show-missing --skip-covered --cov-fail-under=100
+        - mypy -p pyoxigraph
       requires:
+        - coverage
         - mypy
         - pip
-        - pytest-cov
-        - ruamel_yaml
-        # fails pip check: https://github.com/conda-forge/importlib_metadata-feedstock/issues/88
-        - importlib-metadata !=4.7.1
+        - pytest
 
 about:
   home: https://oxigraph.org
   summary: a SPARQL database and RDF toolkit
   license: Apache-2.0 OR MIT
   license_file:
-    # first-party
     - LICENSE-APACHE
     - LICENSE-MIT
     - THIRDPARTY.yml
