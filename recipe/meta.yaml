@@ -9,7 +9,7 @@ source:
   sha256: c7fe9f5946397eaf7c74408681a595ab8fbb49cd472ac7becc3082a1a74d5ba1
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: oxigraph-server

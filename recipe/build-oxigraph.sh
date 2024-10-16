@@ -36,10 +36,11 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
 
     if [[ "${target_platform}" != "${build_platform}" ]]; then
-        echo "will NOT generate stubs for ${target_platform}"
-    else
-        echo "WILL generate stubs on ${target_platform}"
-        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
-        touch "$SP_DIR/pyoxigraph/py.typed"
+        # workaround until cross-python is fixed
+        rm "${BUILD_PREFIX}/bin/python"
+        ln -sf "${PREFIX}/bin/python" "${BUILD_PREFIX}/bin/python"
     fi
+
+    "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
+    touch "${SP_DIR}/pyoxigraph/py.typed"
 fi
