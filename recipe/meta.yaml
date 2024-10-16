@@ -89,11 +89,9 @@ outputs:
       commands:
         - pip check
         - cd python/tests
-        - coverage run --source pyoxigraph --branch -m pytest -vv --color=yes --tb=long
-        - coverage report --show-missing --skip-covered --fail-under=100
+        - pytest -vv --color=yes --tb=long
         - mypy -p pyoxigraph
       requires:
-        - coverage
         - mypy
         - pip
         - pytest

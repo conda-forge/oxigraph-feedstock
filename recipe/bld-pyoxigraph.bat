@@ -40,4 +40,8 @@ chcp 65001
 "%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\__init__.pyi" ^
    || exit 1
 
-echo "" >> "%SP_DIR%\pyoxigraph\py.typed" || exit 1
+dir "%SP_DIR%\pyoxigraph\__init__.pyi" ^
+   || exit 1
+
+dir "%SP_DIR%\pyoxigraph\py.typed" ^
+   || exit 1
