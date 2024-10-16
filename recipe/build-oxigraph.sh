@@ -9,7 +9,7 @@ export ROCKSDB_DIR=$PREFIX
 
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 export CARGO_FEATURE_HTTP_CLIENT_NATIVE_TLS=1
-export CARGO_FEATURE_HTTP_CLIENT_RUSTLS_NATIVE=1
+export CARGO_FEATURE_HTTP_CLIENT_RUSTLS_NATIVE=0
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     echo "will NOT use pkgconfig for rocksdb on ${target_platform}"
