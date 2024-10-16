@@ -22,7 +22,6 @@ outputs:
         - libclang                  # [win]
         - llvm                      # [win]
         - llvm-tools                # [win]
-        - m2w64-binutils            # [win]
         - clangdev                  # [not osx]
         - llvmdev                   # [not osx]
         - openssl                   # [build_platform != target_platform]
