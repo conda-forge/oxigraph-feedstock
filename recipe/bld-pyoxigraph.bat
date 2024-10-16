@@ -17,7 +17,7 @@ cargo-bundle-licenses ^
 maturin build ^
     --release ^
     --strip ^
-    -m python\Cargo.toml
+    -m python\Cargo.toml ^
     -i "%PYTHON%" ^
     || exit 1
 
