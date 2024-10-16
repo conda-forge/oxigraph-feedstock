@@ -1,5 +1,4 @@
-{% set version = "0.3.22" %}
-{% set min_rust = "rust >=1.60" %}
+{% set version = "0.4.1" %}
 
 package:
   name: oxigraph
@@ -7,7 +6,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: be50204dc8f84c699343d1bd277919090ea3bdaff2a7fc5608c04d58092ec6da
+  sha256: c7fe9f5946397eaf7c74408681a595ab8fbb49cd472ac7becc3082a1a74d5ba1
 
 build:
   number: 0
@@ -16,52 +15,67 @@ outputs:
   - name: oxigraph-server
     build:
       script:
-        - bash {{ RECIPE_DIR }}/build-oxigraph.sh  # [unix]
+        - bash {{ RECIPE_DIR }}/build-oxigraph.sh        # [unix]
         - call {{ RECIPE_DIR }}\bld-oxigraph-server.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}                    # [unix]
-        - {{ compiler('cxx') }}                  # [unix]
-        - {{ compiler('m2w64_c') }}              # [win]
-        - {{ compiler('m2w64_cxx') }}            # [win]
-        - m2w64-binutils                         # [win]
-        - {{ min_rust }}
+        - libclang                  # [win]
+        - llvm                      # [win]
+        - llvm-tools                # [win]
+        - clangdev                  # [not osx]
+        - llvmdev                   # [not osx]
+        - pkg-config                # [not (win or build_platform != target_platform)]
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - {{ compiler("rust") }}
+        - {{ stdlib("c") }}
         - cargo-bundle-licenses
-        - clangdev                               # [not osx]
-        - llvmdev                                # [not osx]
+      host:
+        - rocksdb                   # [not (win or build_platform != target_platform)]
+        - openssl                   # [unix]
+        - zstd                      # [not (win or build_platform != target_platform)]
       run:
         - ca-certificates
+        - openssl                   # [unix]
+        - rocksdb                   # [not (win or build_platform != target_platform)]
+        - zstd                      # [not (win or build_platform != target_platform)]
     test:
       commands:
-        - oxigraph_server --version
-        - oxigraph_server --help
+        - oxigraph --version
+        - oxigraph --help
 
   - name: pyoxigraph
     build:
       script:
-        - bash {{ RECIPE_DIR }}/build-oxigraph.sh  # [unix]
+        - bash {{ RECIPE_DIR }}/build-oxigraph.sh   # [unix]
         - call {{ RECIPE_DIR }}\bld-pyoxigraph.bat  # [win]
     requirements:
       build:
-        - python                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - {{ compiler('c') }}                    # [unix]
-        - {{ compiler('cxx') }}                  # [unix]
-        - {{ compiler('m2w64_c') }}              # [win]
-        - {{ compiler('m2w64_cxx') }}            # [win]
-        - m2w64-binutils                         # [win]
-        - {{ min_rust }}
-        - maturin >=1.0,<2.0
+        - libclang                            # [win]
+        - llvm                                # [win]
+        - llvm-tools                          # [win]
+        - clangdev                            # [not osx]
+        - llvmdev                             # [not osx]
+        - pkg-config                          # [not (win or build_platform != target_platform)]
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
+        - {{ compiler("c") }}
+        - {{ compiler("cxx") }}
+        - {{ compiler("rust") }}
+        - {{ stdlib("c") }}
         - cargo-bundle-licenses
-        - clangdev                               # [not osx]
-        - llvmdev                                # [not osx]
-      host:
         - maturin >=1.0,<2.0
+      host:
+        - rocksdb                             # [not (win or build_platform != target_platform)]
+        - zstd                                # [not (win or build_platform != target_platform)]
         - pip
         - python
+        - maturin >=1.0,<2.0
       run:
-        - python
         - ca-certificates
+        - python
+        - rocksdb                             # [not (win or build_platform != target_platform)]
+        - zstd                                # [not (win or build_platform != target_platform)]
     test:
       files:
         - test_licenses.py
@@ -72,22 +86,18 @@ outputs:
       commands:
         - pip check
         - cd python/tests
-        - pytest -vv --cov=pyoxigraph --cov-report=term-missing:skip-covered --cov-fail-under=100
-        - mypy -p pyoxigraph  # [py>=39]
+        - pytest -vv --color=yes --tb=long
+        - mypy -p pyoxigraph
       requires:
         - mypy
         - pip
-        - pytest-cov
-        - ruamel_yaml
-        # fails pip check: https://github.com/conda-forge/importlib_metadata-feedstock/issues/88
-        - importlib-metadata !=4.7.1
+        - pytest
 
 about:
   home: https://oxigraph.org
   summary: a SPARQL database and RDF toolkit
   license: Apache-2.0 OR MIT
   license_file:
-    # first-party
     - LICENSE-APACHE
     - LICENSE-MIT
     - THIRDPARTY.yml

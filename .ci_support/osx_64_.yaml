@@ -1,9 +1,15 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.14'
+MACOSX_SDK_VERSION:
+- '10.14'
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
+c_stdlib:
+- macosx_deployment_target
+c_stdlib_version:
+- '10.14'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -11,9 +17,11 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 macos_machine:
 - x86_64-apple-darwin13.4.0
+openssl:
+- '3'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -22,10 +30,15 @@ python:
 - 3.10.* *_cpython
 - 3.11.* *_cpython
 - 3.12.* *_cpython
-- 3.8.* *_cpython
 - 3.9.* *_cpython
+rocksdb:
+- '9.1'
+rust_compiler:
+- rust
 target_platform:
 - osx-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+zstd:
+- '1.5'
