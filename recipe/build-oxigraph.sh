@@ -47,7 +47,12 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
 
     "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
 
-    "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
-    echo "" >> "$SP_DIR/pyoxigraph/py.typed"
-    ls "$SP_DIR/pyoxigraph/__init__.pyi"
+    if [[ "${target_platform}" == "osx-arm64" ]]; then
+        echo "will NOT generate stubs for ${target_platform}"
+    else
+        echo "WILL generate stubs on ${target_platform}"
+        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
+        echo "" >> "$SP_DIR/pyoxigraph/py.typed"
+        ls "$SP_DIR/pyoxigraph/__init__.pyi"
+    fi
 fi
