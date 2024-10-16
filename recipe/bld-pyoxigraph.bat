@@ -4,6 +4,9 @@ set PYTHONIOENCODING="UTF-8"
 set PYTHONUTF8=1
 set RUST_BACKTRACE=1
 set OPENSSL_NO_VENDOR=1
+set CARGO_FEATURE_HTTP_CLIENT_NATIVE_TLS=1
+set CARGO_FEATURE_HTTP_CLIENT_RUSTLS_NATIVE=0
+set ROCKSDB_NO_PKG_CONFIG=1
 set "OPENSSL_DIR=%LIBRARY_PREFIX%"
 set "TEMP=%SRC_DIR%\tmpbuild_%PY_VER%"
 
@@ -12,8 +15,6 @@ mkdir "%TEMP%"
 rustc --version
 
 cd "%SRC_DIR%\python"
-
-set ROCKSDB_NO_PKG_CONFIG=1
 
 :: dump licenses
 cargo-bundle-licenses ^
