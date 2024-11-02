@@ -1,7 +1,7 @@
 {% set version = "0.4.2" %}
 
 package:
-  name: oxigraph
+  name: oxigraph-split
   version: {{ version }}
 
 source:
@@ -11,12 +11,44 @@ source:
 build:
   number: 0
 
+requirements:
+  build:
+    - libclang                            # [win]
+    - llvm                                # [win]
+    - llvm-tools                          # [win]
+    - clangdev                            # [not osx]
+    - llvmdev                             # [not osx]
+    - pkg-config                          # [not (win or build_platform != target_platform)]
+    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - python                              # [build_platform != target_platform]
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - {{ compiler("rust") }}
+    - {{ stdlib("c") }}
+    - cargo-bundle-licenses
+    - maturin >=1.0,<2.0
+  host:
+    - rocksdb                             # [not (win or build_platform != target_platform)]
+    - zstd                                # [not (win or build_platform != target_platform)]
+    - pip
+    - python
+    - maturin >=1.0,<2.0
+  run:
+    - ca-certificates
+    - python
+    - rocksdb                             # [not (win or build_platform != target_platform)]
+    - zstd                                # [not (win or build_platform != target_platform)]
+
 outputs:
   - name: oxigraph-server
+    script: build-oxigraph.sh       # [unix]
+    script: bld-oxigraph.bat        # [win]
     build:
-      script:
-        - bash {{ RECIPE_DIR }}/build-oxigraph.sh        # [unix]
-        - call {{ RECIPE_DIR }}\bld-oxigraph-server.bat  # [win]
+      # build `oxigraph-server` once
+      skip: true                    # [py != 312]
+      ignore_run_exports:
+        - python
+        - python_abi
     requirements:
       build:
         - libclang                  # [win]
@@ -43,12 +75,19 @@ outputs:
       commands:
         - oxigraph --version
         - oxigraph --help
+    about:
+      home: https://oxigraph.org
+      summary: a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - cli/THIRDPARTY.yml
+      dev_url: https://github.com/oxigraph/oxigraph
 
   - name: pyoxigraph
-    build:
-      script:
-        - bash {{ RECIPE_DIR }}/build-oxigraph.sh   # [unix]
-        - call {{ RECIPE_DIR }}\bld-pyoxigraph.bat  # [win]
+    script: build-oxigraph.sh                 # [unix]
+    script: bld-oxigraph.bat                  # [win]
     requirements:
       build:
         - libclang                            # [win]
@@ -92,6 +131,17 @@ outputs:
         - mypy
         - pip
         - pytest
+    about:
+      home: https://oxigraph.org
+      summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - python/THIRDPARTY.yml
+      dev_url: https://github.com/oxigraph/oxigraph/tree/main/python
+      doc_url: https://pyoxigraph.readthedocs.io
+
 
 about:
   home: https://oxigraph.org
@@ -100,8 +150,6 @@ about:
   license_file:
     - LICENSE-APACHE
     - LICENSE-MIT
-    - THIRDPARTY.yml
-
   dev_url: https://github.com/oxigraph/oxigraph
   doc_url: https://oxigraph.org
 
