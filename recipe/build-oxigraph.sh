@@ -11,9 +11,7 @@ mkdir -p "${CARGO_HOME}"
 if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
     cd "${SRC_DIR}/cli"
 
-    cargo-bundle-licenses \
-        --format yaml \
-        --output "${SRC_DIR}/THIRDPARTY.yml"
+    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
     cargo install \
         --locked \
@@ -24,16 +22,19 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
 fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
-    cargo-bundle-licenses \
-        --format yaml \
-        --output "${SRC_DIR}/THIRDPARTY.yml"
-
     cd "${SRC_DIR}/python"
 
     if [[ "${target_platform}" == "${build_platform}" ]]; then
         export MATURIN_SETUP_ARGS="--features=rocksdb-pkg-config"
     fi
-    "${PYTHON}" -m pip install -vv . --no-build-isolation --no-deps
+
+    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+
+    "${PYTHON}" -m pip install . \
+        -vv \
+        --no-build-isolation \
+        --no-deps \
+        --disable-pip-version-check
 
     if [[ "${target_platform}" != "${build_platform}" ]]; then
         echo "will NOT generate stubs for ${target_platform}"
