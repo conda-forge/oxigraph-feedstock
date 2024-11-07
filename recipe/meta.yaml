@@ -1,4 +1,4 @@
-{% set version = "0.4.2" %}
+{% set version = "0.4.3" %}
 
 package:
   name: oxigraph-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: 9e1873f31f2f4f73f6122a7c242c8639e5393a4dc2efb7e90ee8745f2e115c50
+  sha256: 0c5fac33a36bf7b6d85d5530cb09d6eea6f41257eb56199866e3ceab9a0943de
 
 build:
   number: 0
@@ -41,11 +41,11 @@ requirements:
 
 outputs:
   - name: oxigraph-server
-    script: build-oxigraph.sh       # [unix]
-    script: bld-oxigraph.bat        # [win]
+    script: build-oxigraph.sh  # [unix]
+    script: bld-oxigraph.bat  # [win]
     build:
       # build `oxigraph-server` once
-      skip: true                    # [py != 312]
+      skip: true  # [py != 312]
       ignore_run_exports:
         - python
         - python_abi
@@ -86,8 +86,8 @@ outputs:
       dev_url: https://github.com/oxigraph/oxigraph
 
   - name: pyoxigraph
-    script: build-oxigraph.sh                 # [unix]
-    script: bld-oxigraph.bat                  # [win]
+    script: build-oxigraph.sh  # [unix]
+    script: bld-oxigraph.bat  # [win]
     requirements:
       build:
         - libclang                            # [win]
