@@ -1,4 +1,4 @@
-{% set version = "0.4.3" %}
+{% set version = "0.4.4" %}
 
 package:
   name: oxigraph-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: 0c5fac33a36bf7b6d85d5530cb09d6eea6f41257eb56199866e3ceab9a0943de
+  sha256: d505ae1d618fbbcb7b3161deb1e4ec45154763b264f734c0c395f3d3434141c0
 
 build:
   number: 0
