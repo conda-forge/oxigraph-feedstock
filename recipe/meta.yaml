@@ -1,5 +1,12 @@
 {% set version = "0.4.4" %}
 
+# try to avoid bot mangling
+{% if 1 %}
+# avoid selectors in output `script` for _other_ bot
+{% set build_script = "build-oxigraph.sh" %}
+{% set build_script = "bld-oxigraph.bat" %}   # [win]
+{% endif %}
+
 package:
   name: oxigraph-split
   version: {{ version }}
@@ -41,8 +48,7 @@ requirements:
 
 outputs:
   - name: oxigraph-server
-    script: build-oxigraph.sh  # [unix]
-    script: bld-oxigraph.bat  # [win]
+    script: {{ build_script }}
     build:
       # build `oxigraph-server` once
       skip: true  # [py != 312]
@@ -86,8 +92,7 @@ outputs:
       dev_url: https://github.com/oxigraph/oxigraph
 
   - name: pyoxigraph
-    script: build-oxigraph.sh  # [unix]
-    script: bld-oxigraph.bat  # [win]
+    script: {{ build_script }}
     requirements:
       build:
         - libclang                            # [win]
