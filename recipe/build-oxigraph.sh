@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eux
 
-export OPENSSL_DIR=$PREFIX
-export ROCKSDB_DIR=$PREFIX
+export OPENSSL_DIR="${PREFIX}"
+export ROCKSDB_DIR="${PREFIX}"
 
 rustc --version
 
@@ -40,7 +40,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         echo "will NOT generate stubs for ${target_platform}"
     else
         echo "WILL generate stubs on ${target_platform}"
-        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
-        touch "$SP_DIR/pyoxigraph/py.typed"
+        "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
+        touch "${SP_DIR}/pyoxigraph/py.typed"
     fi
 fi
