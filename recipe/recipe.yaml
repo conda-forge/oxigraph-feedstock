@@ -2,7 +2,7 @@
 
 context:
   version: 0.4.6
-  build_script: ${{ "bld-oxigraph.bat" if win else "build-oxigraph.sh" }}
+  build_script: ${{ "call %RECIPE_DIR%\\bld-oxigraph.bat" if win else "bash $RECIPE_DIR/build-oxigraph.sh" }}
 
 recipe:
   name: oxigraph-split
@@ -23,6 +23,10 @@ outputs:
       skip: match(python, '!=3.12')
       script: ${{ build_script }}
     requirements:
+      ignore_run_exports:
+        from_package:
+          - python
+          - python_abi
       build:
         - ${{ compiler("c") }}
         - ${{ compiler("cxx") }}
