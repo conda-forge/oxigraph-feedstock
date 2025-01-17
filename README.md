@@ -3,10 +3,6 @@ About oxigraph-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/oxigraph-feedstock/blob/main/LICENSE.txt)
 
-
-About oxigraph
---------------
-
 Home: https://oxigraph.org/
 
 Package license: Apache-2.0 OR MIT
@@ -16,17 +12,6 @@ Summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
 Development: https://github.com/oxigraph/oxigraph/tree/main/python
 
 Documentation: https://pyoxigraph.readthedocs.io/
-
-About oxigraph-server
----------------------
-
-Home: https://oxigraph.org/
-
-Package license: Apache-2.0 OR MIT
-
-Summary: a SPARQL database and RDF toolkit
-
-Development: https://github.com/oxigraph/oxigraph
 
 Current build status
 ====================
@@ -198,7 +183,6 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-oxigraph--server-green.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/oxigraph-server.svg)](https://anaconda.org/conda-forge/oxigraph-server) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-pyoxigraph-green.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/pyoxigraph.svg)](https://anaconda.org/conda-forge/pyoxigraph) |
 
 Installing oxigraph
@@ -211,41 +195,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `oxigraph-server, pyoxigraph` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `pyoxigraph` can be installed with `conda`:
 
 ```
-conda install oxigraph-server pyoxigraph
-```
-
-or with `mamba`:
-
-```
-mamba install oxigraph-server pyoxigraph
-```
-
-It is possible to list all of the versions of `oxigraph-server` available on your platform with `conda`:
-
-```
-conda search oxigraph-server --channel conda-forge
+conda install pyoxigraph
 ```
 
 or with `mamba`:
 
 ```
-mamba search oxigraph-server --channel conda-forge
+mamba install pyoxigraph
+```
+
+It is possible to list all of the versions of `pyoxigraph` available on your platform with `conda`:
+
+```
+conda search pyoxigraph --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search pyoxigraph --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search oxigraph-server --channel conda-forge
+mamba repoquery search pyoxigraph --channel conda-forge
 
-# List packages depending on `oxigraph-server`:
-mamba repoquery whoneeds oxigraph-server --channel conda-forge
+# List packages depending on `pyoxigraph`:
+mamba repoquery whoneeds pyoxigraph --channel conda-forge
 
-# List dependencies of `oxigraph-server`:
-mamba repoquery depends oxigraph-server --channel conda-forge
+# List dependencies of `pyoxigraph`:
+mamba repoquery depends pyoxigraph --channel conda-forge
 ```
 
 

@@ -2,7 +2,7 @@
 
 context:
   version: 0.4.6
-  skip_oxigraph_server: ${{ 0 if match(python, '3.12') else 1 }}
+  skip_oxigraph_server: ${{ 0 if match(python, "3.12.*") else 1 }}
 
 recipe:
   name: oxigraph-split
@@ -16,8 +16,11 @@ cache:
     url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
     sha256: 37c5a0b57e58ebdaa6009d11b9bcbc028df4ed00056960778aade4912692f353
   build:
-    script_env:
-      - SKIP_OXIGRAPH_SERVER: ${{ skip_oxigraph_server }}
+    script:
+      - set SKIP_OXIGRAPH_SERVER=${{ skip_oxigraph_server }} || export SKIP_OXIGRAPH_SERVER=${{ skip_oxigraph_server }}
+      - if: win
+        then: call %RECIPE_DIR%\bld-oxigraph.bat
+        else: bash %RECIPE_DIR%\build-oxigraph.sh
   requirements:
     build:
       - ${{ compiler("c") }}
