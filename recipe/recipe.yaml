@@ -20,10 +20,13 @@ outputs:
       name: oxigraph-server
     build:
       # build `oxigraph-server` once
-      skip: match(python, '!=3.12')
+      skip: match(python, '!=3.12.*')
       script: ${{ build_script }}
     requirements:
       ignore_run_exports:
+        by_name:
+          - python
+          - python_abi
         from_package:
           - python
           - python_abi
