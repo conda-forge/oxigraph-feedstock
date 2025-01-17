@@ -2,60 +2,83 @@
 
 context:
   version: 0.4.6
-  build_script: ${{ "call %RECIPE_DIR%\\bld-oxigraph.bat" if win else "bash $RECIPE_DIR/build-oxigraph.sh" }}
+  skip_oxigraph_server: ${{ 0 if match(python, '3.12') else 1 }}
 
 recipe:
   name: oxigraph-split
   version: ${{ version }}
 
-source:
-  url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-  sha256: 37c5a0b57e58ebdaa6009d11b9bcbc028df4ed00056960778aade4912692f353
-
 build:
   number: 1
+
+cache:
+  source:
+    url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
+    sha256: 37c5a0b57e58ebdaa6009d11b9bcbc028df4ed00056960778aade4912692f353
+  build:
+    script_env:
+      - SKIP_OXIGRAPH_SERVER: ${{ skip_oxigraph_server }}
+  requirements:
+    build:
+      - ${{ compiler("c") }}
+      - ${{ compiler("cxx") }}
+      - ${{ compiler("rust") }}
+      - ${{ stdlib("c") }}
+      - cargo-bundle-licenses
+      - maturin >=1.0,<2.0
+      - if: win
+        then:
+          - libclang
+          - llvm
+          - llvm-tools
+      - if: not osx
+        then:
+          - clangdev
+          - llvmdev
+      - if: not (win or build_platform != target_platform)
+        then:
+          - pkg-config
+      - if: build_platform != target_platform
+        then:
+        - cross-python_${{ target_platform }}
+        - python
+    host:
+      - pip
+      - python
+      - maturin >=1.0,<2.0
+      - if: not (win or build_platform != target_platform)
+        then:
+        - rocksdb
+        - zstd
+    run:
+      - ca-certificates
+      - python
+      - if: not (win or build_platform != target_platform)
+        then:
+          - rocksdb
+          - zstd
 
 outputs:
   - package:
       name: oxigraph-server
     build:
-      # build `oxigraph-server` once
-      skip: match(python, '!=3.12.*')
-      script: ${{ build_script }}
+      skip: skip_oxigraph_server
+      files:
+        - if: win
+          then:
+            - ${{ LIBRARY_BIN }}\oxigraph
+          else:
+            - ${{ PREFIX }}/bin/oxigraph
     requirements:
       ignore_run_exports:
         by_name:
           - python
           - python_abi
+          - maturin
         from_package:
           - python
           - python_abi
-      build:
-        - ${{ compiler("c") }}
-        - ${{ compiler("cxx") }}
-        - ${{ compiler("rust") }}
-        - ${{ stdlib("c") }}
-        - cargo-bundle-licenses
-        - if: win
-          then:
-            - libclang
-            - llvm
-            - llvm-tools
-        - if: not osx
-          then:
-          - clangdev
-          - llvmdev
-        - if: not (win or build_platform != target_platform)
-          then:
-          - pkg-config
-      host:
-        - if: unix
-          then:
-            - openssl
-        - if: not (win or build_platform != target_platform)
-          then:
-            - rocksdb
-            - zstd
+          - maturin
       run:
         - ca-certificates
         - if: unix
@@ -82,31 +105,9 @@ outputs:
   - package:
       name: pyoxigraph
     build:
-      script: ${{ build_script }}
+      files:
+        - ${{ SP_DIR }}
     requirements:
-      build:
-        - ${{ compiler("c") }}
-        - ${{ compiler("cxx") }}
-        - ${{ compiler("rust") }}
-        - ${{ stdlib("c") }}
-        - cargo-bundle-licenses
-        - maturin >=1.0,<2.0
-        - if: win
-          then:
-            - libclang
-            - llvm
-            - llvm-tools
-        - if: not osx
-          then:
-            - clangdev
-            - llvmdev
-        - if: not (win or build_platform != target_platform)
-          then:
-            - pkg-config
-        - if: build_platform != target_platform
-          then:
-          - cross-python_${{ target_platform }}
-          - python
       host:
         - pip
         - python
@@ -151,7 +152,6 @@ outputs:
         - python/THIRDPARTY.yml
       repository: https://github.com/oxigraph/oxigraph/tree/main/python
       documentation: https://pyoxigraph.readthedocs.io
-
 
 about:
   homepage: https://oxigraph.org
