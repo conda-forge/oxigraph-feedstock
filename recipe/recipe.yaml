@@ -19,12 +19,21 @@ outputs:
   - package:
       name: oxigraph-server
     build:
-      skip: not match(python, "3.12.*")
+      skip: match(python, "!=3.12.*")
       script:
         file: build-oxigraph
         env:
           PKG_NAME: oxigraph-server
     requirements:
+      ignore_run_exports:
+        by_name:
+          - python
+          - python_abi
+          - maturin
+        from_package:
+          - python
+          - python_abi
+          - maturin
       build:
         - ${{ compiler("c") }}
         - ${{ compiler("cxx") }}
@@ -50,6 +59,7 @@ outputs:
           - rocksdb
           - zstd
       run:
+        - openssl
         - if: not (win or build_platform != target_platform)
           then:
             - rocksdb
@@ -71,7 +81,6 @@ outputs:
   - package:
       name: pyoxigraph
     build:
-      skip: skip_oxigraph_server
       script:
         file: build-oxigraph
         env:
@@ -108,6 +117,9 @@ outputs:
           then:
           - rocksdb
           - zstd
+        - if: unix
+          then:
+            - openssl
       run:
         - ca-certificates
         - python
@@ -115,6 +127,9 @@ outputs:
           then:
             - rocksdb
             - zstd
+        - if: unix
+          then:
+            - openssl
     tests:
       - python:
           pip_check: true
