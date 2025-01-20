@@ -1,92 +1,55 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
 
 context:
-  version: 0.4.6
-  skip_oxigraph_server: ${{ 0 if match(python, "3.12.*") else 1 }}
+  version: 0.4.7
 
 recipe:
   name: oxigraph-split
   version: ${{ version }}
 
+source:
+  url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
+  sha256: af613b576ed62f28961a6d4b3f8af4c7ee72db8794fb6b7a5090bc1a90b63dcf
+
 build:
   number: 1
-
-cache:
-  source:
-    url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-    sha256: 37c5a0b57e58ebdaa6009d11b9bcbc028df4ed00056960778aade4912692f353
-  build:
-    script:
-      - set SKIP_OXIGRAPH_SERVER=${{ skip_oxigraph_server }} || export SKIP_OXIGRAPH_SERVER=${{ skip_oxigraph_server }}
-      - if: win
-        then: call %RECIPE_DIR%\bld-oxigraph.bat
-        else: bash %RECIPE_DIR%\build-oxigraph.sh
-  requirements:
-    build:
-      - ${{ compiler("c") }}
-      - ${{ compiler("cxx") }}
-      - ${{ compiler("rust") }}
-      - ${{ stdlib("c") }}
-      - cargo-bundle-licenses
-      - maturin >=1.0,<2.0
-      - if: win
-        then:
-          - libclang
-          - llvm
-          - llvm-tools
-      - if: not osx
-        then:
-          - clangdev
-          - llvmdev
-      - if: not (win or build_platform != target_platform)
-        then:
-          - pkg-config
-      - if: build_platform != target_platform
-        then:
-        - cross-python_${{ target_platform }}
-        - python
-    host:
-      - pip
-      - python
-      - maturin >=1.0,<2.0
-      - if: not (win or build_platform != target_platform)
-        then:
-        - rocksdb
-        - zstd
-    run:
-      - ca-certificates
-      - python
-      - if: not (win or build_platform != target_platform)
-        then:
-          - rocksdb
-          - zstd
 
 outputs:
   - package:
       name: oxigraph-server
     build:
-      skip: skip_oxigraph_server
-      files:
+      skip: not match(python, "3.12.*")
+      script:
+        file: build-oxigraph
+        env:
+          PKG_NAME: oxigraph-server
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
         - if: win
           then:
-            - ${{ LIBRARY_BIN }}\oxigraph
-          else:
-            - ${{ PREFIX }}/bin/oxigraph
-    requirements:
-      ignore_run_exports:
-        by_name:
-          - python
-          - python_abi
-          - maturin
-        from_package:
-          - python
-          - python_abi
-          - maturin
-      run:
-        - ca-certificates
-        - if: unix
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
           then:
-            - openssl
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+      host:
+        - pip
+        - if: not (win or build_platform != target_platform)
+          then:
+          - rocksdb
+          - zstd
+      run:
         - if: not (win or build_platform != target_platform)
           then:
             - rocksdb
@@ -108,9 +71,35 @@ outputs:
   - package:
       name: pyoxigraph
     build:
-      files:
-        - ${{ SP_DIR }}
+      skip: skip_oxigraph_server
+      script:
+        file: build-oxigraph
+        env:
+          PKG_NAME: pyoxigraph
     requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - maturin >=1.0,<2.0
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+        - if: build_platform != target_platform
+          then:
+          - cross-python_${{ target_platform }}
+          - python
       host:
         - pip
         - python

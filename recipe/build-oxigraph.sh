@@ -8,12 +8,13 @@ rustc --version
 
 mkdir -p "${CARGO_HOME}"
 
-pushd "${SRC_DIR}/python"
+if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
+    cd "${SRC_DIR}/python"
+    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+
     if [[ "${target_platform}" == "${build_platform}" ]]; then
         export MATURIN_SETUP_ARGS="--features=rocksdb-pkg-config"
     fi
-
-    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
     "${PYTHON}" -m pip install . \
         -vv \
@@ -28,17 +29,16 @@ pushd "${SRC_DIR}/python"
         "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
         touch "${SP_DIR}/pyoxigraph/py.typed"
     fi
-popd
+fi
 
-if [[ "${SKIP_OXIGRAPH_SERVER}" == "0" ]]; then
-    pushd "${SRC_DIR}/cli"
-        cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
+    cd "${SRC_DIR}/cli"
+    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
-        cargo install \
-            --locked \
-            --no-track \
-            --profile release \
-            --root "${PREFIX}" \
-            --path .
-    popd
+    cargo install \
+        --locked \
+        --no-track \
+        --profile release \
+        --root "${PREFIX}" \
+        --path .
 fi
