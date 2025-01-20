@@ -3,6 +3,9 @@ schema_version: 1
 
 context:
   version: 0.4.7
+  # without `cache:`, the build time is doubled: try to just build once
+  # see https://github.com/conda-forge/conda-smithy/issues/2057
+  skip_build_server_py: ${{ "!=" ~ python_min ~ ".*" }}
 
 recipe:
   name: oxigraph-split
@@ -19,7 +22,7 @@ outputs:
   - package:
       name: oxigraph-server
     build:
-      skip: match(python, "!=3.12.*")
+      skip: match(python, skip_build_server_py)
       script:
         file: build-oxigraph
         env:
@@ -65,7 +68,11 @@ outputs:
             - rocksdb
             - zstd
     tests:
-      - script:
+      - requirements:
+          run:
+            # verify this solves against some other python than the build one
+            - python ${{ skip_build_server_py }}
+        script:
         - oxigraph --version
         - oxigraph --help
     about:
