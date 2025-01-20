@@ -1,0 +1,183 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: 0.4.7
+  # without `cache:`, the build time is doubled: try to just build once
+  # see https://github.com/conda-forge/conda-smithy/issues/2057
+  skip_build_server_py: ${{ "!=" ~ python_min ~ ".*" }}
+
+recipe:
+  name: oxigraph-split
+  version: ${{ version }}
+
+source:
+  url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
+  sha256: af613b576ed62f28961a6d4b3f8af4c7ee72db8794fb6b7a5090bc1a90b63dcf
+
+build:
+  number: 1
+
+outputs:
+  - package:
+      name: oxigraph-server
+    build:
+      skip: match(python, skip_build_server_py)
+      script:
+        file: build-oxigraph
+        env:
+          PKG_NAME: oxigraph-server
+    requirements:
+      ignore_run_exports:
+        by_name:
+          - python
+          - python_abi
+          - maturin
+        from_package:
+          - python
+          - python_abi
+          - maturin
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+      host:
+        - pip
+        - if: not (win or build_platform != target_platform)
+          then:
+          - rocksdb
+          - zstd
+      run:
+        - openssl
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+    tests:
+      - requirements:
+          run:
+            # verify this solves against some other python than the build one
+            - python ${{ skip_build_server_py }}
+        script:
+        - oxigraph --version
+        - oxigraph --help
+    about:
+      homepage: https://oxigraph.org
+      summary: a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - cli/THIRDPARTY.yml
+      repository: https://github.com/oxigraph/oxigraph
+
+  - package:
+      name: pyoxigraph
+    build:
+      script:
+        file: build-oxigraph
+        env:
+          PKG_NAME: pyoxigraph
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - maturin >=1.0,<2.0
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+        - if: build_platform != target_platform
+          then:
+          - cross-python_${{ target_platform }}
+          - python
+      host:
+        - pip
+        - python
+        - maturin >=1.0,<2.0
+        - if: not (win or build_platform != target_platform)
+          then:
+          - rocksdb
+          - zstd
+        - if: unix
+          then:
+            - openssl
+      run:
+        - ca-certificates
+        - python
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+        - if: unix
+          then:
+            - openssl
+    tests:
+      - python:
+          pip_check: true
+          imports:
+            - pyoxigraph
+      - files:
+          recipe:
+          - test_liceneses.py
+          source:
+            - python/tests/
+        script:
+          - cd python/tests
+          - pytest -vv --color=yes --tb=long
+          - mypy -p pyoxigraph
+        requirements:
+          run:
+            - mypy
+            - pip
+            - pytest
+    about:
+      homepage: https://oxigraph.org
+      summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - python/THIRDPARTY.yml
+      repository: https://github.com/oxigraph/oxigraph/tree/main/python
+      documentation: https://pyoxigraph.readthedocs.io
+
+about:
+  homepage: https://oxigraph.org
+  summary: a SPARQL database and RDF toolkit
+  license: Apache-2.0 OR MIT
+  license_file:
+    - LICENSE-APACHE
+    - LICENSE-MIT
+  repository: https://github.com/oxigraph/oxigraph
+
+extra:
+  feedstock-name: oxigraph
+  recipe-maintainers:
+    - Tpt
+    - bollwyvl
