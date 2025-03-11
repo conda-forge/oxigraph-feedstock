@@ -21,6 +21,7 @@ outputs:
   - package:
       name: oxigraph-server
     build:
+      skip: not (match(python, python_min ~ ".*") and is_abi3 == "true")
       script:
         file: build-oxigraph
     requirements:
