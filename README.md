@@ -7,31 +7,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/oxigraph-feedst
 About oxigraph
 --------------
 
-Home: https://oxigraph.org
-
-Package license: Apache-2.0 OR MIT
-
-Summary: a SPARQL database and RDF toolkit
-
-Development: https://github.com/oxigraph/oxigraph
-
-Documentation: https://oxigraph.org
-
-About oxigraph-server
----------------------
-
-Home: https://oxigraph.org
-
-Package license: Apache-2.0 OR MIT
-
-Summary: a SPARQL database and RDF toolkit
-
-Development: https://github.com/oxigraph/oxigraph
-
-About pyoxigraph
-----------------
-
-Home: https://oxigraph.org
+Home: https://oxigraph.org/
 
 Package license: Apache-2.0 OR MIT
 
@@ -39,7 +15,18 @@ Summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
 
 Development: https://github.com/oxigraph/oxigraph/tree/main/python
 
-Documentation: https://pyoxigraph.readthedocs.io
+Documentation: https://pyoxigraph.readthedocs.io/
+
+About oxigraph-server
+---------------------
+
+Home: https://oxigraph.org/
+
+Package license: Apache-2.0 OR MIT
+
+Summary: a SPARQL database and RDF toolkit
+
+Development: https://github.com/oxigraph/oxigraph
 
 Current build status
 ====================

@@ -18,6 +18,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '18'
+is_abi3:
+- 'true'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 openssl:
@@ -28,6 +30,8 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.12.* *_cpython
+python_min:
+- '3.9'
 rocksdb:
 - '9.1'
 rust_compiler:
