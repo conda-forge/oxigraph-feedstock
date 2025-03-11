@@ -1,0 +1,179 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: 0.4.9
+  maturin_min: 1.2.2
+  maturin_max: 2.0.0
+
+recipe:
+  name: oxigraph
+  version: ${{ version }}
+
+source:
+  url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
+  sha256: eef5e2ce5606f4433f2af876cf8c119ca31b8b1cb6cf32ee7d319d9680e1e7ea
+
+build:
+  number: 1
+
+outputs:
+  - package:
+      name: oxigraph-server
+    build:
+      skip: not (match(python, python_min ~ ".*") and is_abi3 == "true")
+      script:
+        file: build-oxigraph
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+      host:
+        - pip
+        - if: not (win or build_platform != target_platform)
+          then:
+          - rocksdb
+          - zstd
+      run:
+        - openssl
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+      ignore_run_exports:
+        from_package:
+          - python
+          - python_abi
+    tests:
+      - requirements:
+          run:
+            # verify this solves against some other python than the build one
+            - python !=${{ python_min }}
+        script:
+        - oxigraph --version
+        - oxigraph --help
+    about:
+      homepage: https://oxigraph.org
+      summary: a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - cli/THIRDPARTY.yml
+      repository: https://github.com/oxigraph/oxigraph
+
+  - package:
+      name: pyoxigraph
+    build:
+      skip: not (match(python, python_min ~ ".*") and is_abi3 == "true")
+      script:
+        file: build-oxigraph
+      python:
+        version_independent: true
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+        - if: build_platform != target_platform
+          then:
+          - cross-python_${{ target_platform }}
+          - maturin >=${{ maturin_min }},<${{ maturin_max }}
+          - python
+      host:
+        - pip
+        - python
+        - python-abi3
+        - maturin >=${{ maturin_min }},<${{ maturin_max }}
+        - if: not (win or build_platform != target_platform)
+          then:
+          - rocksdb
+          - zstd
+        - if: unix
+          then:
+            - openssl
+      run:
+        - ca-certificates
+        - python
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+        - if: unix
+          then:
+            - openssl
+      ignore_run_exports:
+        from_package:
+          - cross-python_${{ target_platform }}
+    tests:
+      - python:
+          pip_check: true
+          python_version:
+            - ${{ python_min }}.*
+            - 3.13.*
+          imports: pyoxigraph
+      - files:
+          source:
+            - python/tests/
+        requirements:
+          run:
+            - mypy
+            - pytest
+        script:
+          - cd python/tests
+          - pytest -vv --color=yes --tb=long
+          - mypy -p pyoxigraph
+    about:
+      homepage: https://oxigraph.org
+      summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - python/THIRDPARTY.yml
+      repository: https://github.com/oxigraph/oxigraph/tree/main/python
+      documentation: https://pyoxigraph.readthedocs.io
+
+about:
+  homepage: https://oxigraph.org
+  summary: a SPARQL database and RDF toolkit
+  license: Apache-2.0 OR MIT
+  license_file:
+    - LICENSE-APACHE
+    - LICENSE-MIT
+  repository: https://github.com/oxigraph/oxigraph
+
+extra:
+  feedstock-name: oxigraph
+  recipe-maintainers:
+    - Tpt
+    - bollwyvl
