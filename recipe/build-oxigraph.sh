@@ -41,9 +41,6 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         echo "will NOT generate stubs for ${target_platform}"
     else
         echo "WILL generate stubs on ${target_platform}"
-        SP_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
-        export SP_DIR
-        "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
-        touch "${SP_DIR}/pyoxigraph/py.typed"
+        "${PYTHON}" "${RECIPE_DIR}/build-stubs.py"
     fi
 fi

@@ -38,9 +38,6 @@ IF "%PKG_NAME%" == "pyoxigraph" (
 
    chcp 65001
 
-   "%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\__init__.pyi" ^
-      || exit 1
-
-   copy /b NUL "%SP_DIR%\pyoxigraph\py.typed" ^
+   "%PYTHON%" "%RECIPE_DIR%\build-stubs.py" ^
       || exit 1
 )
