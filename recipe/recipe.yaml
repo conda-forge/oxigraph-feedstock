@@ -113,7 +113,7 @@ outputs:
         - pip
         - python
         - python-abi3
-        - maturin >=1.0,<2.0
+        - maturin >=${{ maturin_min }},<${{ maturin_max }}
         - if: not (win or build_platform != target_platform)
           then:
           - rocksdb
