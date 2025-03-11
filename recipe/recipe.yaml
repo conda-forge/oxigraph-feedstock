@@ -55,6 +55,10 @@ outputs:
           then:
             - rocksdb
             - zstd
+      ignore_run_exports:
+        from_package:
+          - python
+          - python_abi
     tests:
       - requirements:
           run:
