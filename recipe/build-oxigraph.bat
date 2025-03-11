@@ -43,5 +43,4 @@ IF "%PKG_NAME%" == "pyoxigraph" (
 
    copy /b NUL "%SP_DIR%\pyoxigraph\py.typed" ^
       || exit 1
-
 )
