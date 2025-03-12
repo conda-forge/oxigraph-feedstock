@@ -27,7 +27,7 @@ pin_run_as_build:
 python:
 - 3.9.* *_cpython
 rocksdb:
-- '9.1'
+- '9.11'
 rust_compiler:
 - rust
 target_platform:
