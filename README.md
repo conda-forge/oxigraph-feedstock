@@ -17,6 +17,17 @@ Development: https://github.com/oxigraph/oxigraph
 
 Documentation: https://oxigraph.org
 
+About oxigraph-server
+---------------------
+
+Home: https://oxigraph.org
+
+Package license: Apache-2.0 OR MIT
+
+Summary: a SPARQL database and RDF toolkit
+
+Development: https://github.com/oxigraph/oxigraph
+
 About pyoxigraph
 ----------------
 
@@ -29,17 +40,6 @@ Summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
 Development: https://github.com/oxigraph/oxigraph/tree/main/python
 
 Documentation: https://pyoxigraph.readthedocs.io
-
-About oxigraph-server
----------------------
-
-Home: https://oxigraph.org
-
-Package license: Apache-2.0 OR MIT
-
-Summary: a SPARQL database and RDF toolkit
-
-Development: https://github.com/oxigraph/oxigraph
 
 Current build status
 ====================
@@ -330,7 +330,4 @@ Feedstock Maintainers
 
 * [@Tpt](https://github.com/Tpt/)
 * [@bollwyvl](https://github.com/bollwyvl/)
-
-
-<!-- dummy commit to enable rerendering -->
 
