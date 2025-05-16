@@ -1,4 +1,4 @@
-{% set version = "0.4.9" %}
+{% set version = "0.4.10" %}
 
 # try to avoid bot mangling
 {% if 1 %}
@@ -13,10 +13,10 @@ package:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v{{ version }}/oxigraph_v{{ version }}.tar.gz
-  sha256: eef5e2ce5606f4433f2af876cf8c119ca31b8b1cb6cf32ee7d319d9680e1e7ea
+  sha256: 3b3e2810b9554fb4964ab0b5525b28922d6bfef37cf67dd7fc1bd12622fa3c63
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
