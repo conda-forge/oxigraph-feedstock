@@ -1,10 +1,8 @@
 azure:
-  store_build_artifacts: true
   settings_win:
     variables:
-      # https://github.com/conda-forge/oxigraph-feedstock/pull/74
-      ## slow, but runs out of space during cargo build
       CONDA_BLD_PATH: C:\\bld\\
+  store_build_artifacts: true
 build_platform:
   osx_arm64: osx_64
 conda_build:
