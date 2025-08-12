@@ -27,7 +27,7 @@ pin_run_as_build:
 python:
 - 3.13.* *_cp313
 rocksdb:
-- '10.4'
+- '10.5'
 rust_compiler:
 - rust
 target_platform:
