@@ -9,7 +9,7 @@ version = "3.53.1"  # conda-smithy version used to generate this file
 description = "Pixi configuration for conda-forge/oxigraph-feedstock"
 authors = ["@conda-forge/oxigraph"]
 channels = ["conda-forge"]
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-64", "win-64"]
 requires-pixi = ">=0.59.0"
 
 [dependencies]
@@ -226,4 +226,4 @@ description = "Lint the feedstock recipe"
 smithy = ["smithy"]
 
 # This is a copy of default, to be enabled by build_steps.sh during Docker builds
-docker-build-linux-64 = []
+# __PLATFORM_SPECIFIC_ENV__ = []
