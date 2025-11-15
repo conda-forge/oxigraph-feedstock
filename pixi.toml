@@ -62,15 +62,6 @@ description = "Debug oxigraph-feedstock with variant linux_64_python3.13.____cp3
 [tasks."inspect-linux_64_python3.13.____cp313"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_python3.13.____cp313.yaml"
 description = "List contents of oxigraph-feedstock packages built for variant linux_64_python3.13.____cp313"
-[tasks."build-linux_64_python3.14.____cp314"]
-cmd = "conda-build build recipe -m .ci_support/linux_64_python3.14.____cp314.yaml --suppress-variables --clobber-file .ci_support/clobber_linux_64_python3.14.____cp314.yaml"
-description = "Build oxigraph-feedstock with variant linux_64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."debug-linux_64_python3.14.____cp314"]
-cmd = "conda-build debug recipe -m .ci_support/linux_64_python3.14.____cp314.yaml"
-description = "Debug oxigraph-feedstock with variant linux_64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."inspect-linux_64_python3.14.____cp314"]
-cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_python3.14.____cp314.yaml"
-description = "List contents of oxigraph-feedstock packages built for variant linux_64_python3.14.____cp314"
 [tasks."build-osx_64_python3.10.____cpython"]
 cmd = "conda-build build recipe -m .ci_support/osx_64_python3.10.____cpython.yaml --suppress-variables --clobber-file .ci_support/clobber_osx_64_python3.10.____cpython.yaml"
 description = "Build oxigraph-feedstock with variant osx_64_python3.10.____cpython directly (without setup scripts)"
@@ -107,15 +98,6 @@ description = "Debug oxigraph-feedstock with variant osx_64_python3.13.____cp313
 [tasks."inspect-osx_64_python3.13.____cp313"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_python3.13.____cp313.yaml"
 description = "List contents of oxigraph-feedstock packages built for variant osx_64_python3.13.____cp313"
-[tasks."build-osx_64_python3.14.____cp314"]
-cmd = "conda-build build recipe -m .ci_support/osx_64_python3.14.____cp314.yaml --suppress-variables --clobber-file .ci_support/clobber_osx_64_python3.14.____cp314.yaml"
-description = "Build oxigraph-feedstock with variant osx_64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."debug-osx_64_python3.14.____cp314"]
-cmd = "conda-build debug recipe -m .ci_support/osx_64_python3.14.____cp314.yaml"
-description = "Debug oxigraph-feedstock with variant osx_64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."inspect-osx_64_python3.14.____cp314"]
-cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_python3.14.____cp314.yaml"
-description = "List contents of oxigraph-feedstock packages built for variant osx_64_python3.14.____cp314"
 [tasks."build-osx_arm64_python3.10.____cpython"]
 cmd = "conda-build build recipe -m .ci_support/osx_arm64_python3.10.____cpython.yaml --suppress-variables --clobber-file .ci_support/clobber_osx_arm64_python3.10.____cpython.yaml"
 description = "Build oxigraph-feedstock with variant osx_arm64_python3.10.____cpython directly (without setup scripts)"
@@ -152,15 +134,6 @@ description = "Debug oxigraph-feedstock with variant osx_arm64_python3.13.____cp
 [tasks."inspect-osx_arm64_python3.13.____cp313"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_python3.13.____cp313.yaml"
 description = "List contents of oxigraph-feedstock packages built for variant osx_arm64_python3.13.____cp313"
-[tasks."build-osx_arm64_python3.14.____cp314"]
-cmd = "conda-build build recipe -m .ci_support/osx_arm64_python3.14.____cp314.yaml --suppress-variables --clobber-file .ci_support/clobber_osx_arm64_python3.14.____cp314.yaml"
-description = "Build oxigraph-feedstock with variant osx_arm64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."debug-osx_arm64_python3.14.____cp314"]
-cmd = "conda-build debug recipe -m .ci_support/osx_arm64_python3.14.____cp314.yaml"
-description = "Debug oxigraph-feedstock with variant osx_arm64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."inspect-osx_arm64_python3.14.____cp314"]
-cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_python3.14.____cp314.yaml"
-description = "List contents of oxigraph-feedstock packages built for variant osx_arm64_python3.14.____cp314"
 [tasks."build-win_64_python3.10.____cpython"]
 cmd = "conda-build build recipe -m .ci_support/win_64_python3.10.____cpython.yaml --suppress-variables --clobber-file .ci_support/clobber_win_64_python3.10.____cpython.yaml"
 description = "Build oxigraph-feedstock with variant win_64_python3.10.____cpython directly (without setup scripts)"
@@ -197,15 +170,6 @@ description = "Debug oxigraph-feedstock with variant win_64_python3.13.____cp313
 [tasks."inspect-win_64_python3.13.____cp313"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_python3.13.____cp313.yaml"
 description = "List contents of oxigraph-feedstock packages built for variant win_64_python3.13.____cp313"
-[tasks."build-win_64_python3.14.____cp314"]
-cmd = "conda-build build recipe -m .ci_support/win_64_python3.14.____cp314.yaml --suppress-variables --clobber-file .ci_support/clobber_win_64_python3.14.____cp314.yaml"
-description = "Build oxigraph-feedstock with variant win_64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."debug-win_64_python3.14.____cp314"]
-cmd = "conda-build debug recipe -m .ci_support/win_64_python3.14.____cp314.yaml"
-description = "Debug oxigraph-feedstock with variant win_64_python3.14.____cp314 directly (without setup scripts)"
-[tasks."inspect-win_64_python3.14.____cp314"]
-cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_python3.14.____cp314.yaml"
-description = "List contents of oxigraph-feedstock packages built for variant win_64_python3.14.____cp314"
 
 [feature.smithy.dependencies]
 conda-smithy = "*"

@@ -17,7 +17,7 @@ source:
 
 build:
   number: 1
-  # segfaults under python 3.14
+  # segfaults under python 3.14 when importing python/tests/test_io.py
   skip: true  # [py >= 314]
 
 requirements:
