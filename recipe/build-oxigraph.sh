@@ -9,7 +9,7 @@ rustc --version
 mkdir -p "${CARGO_HOME}"
 
 if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
-    cd "${SRC_DIR}/cli"
+    cd "${SRC_DIR}/server"
 
     cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
@@ -40,7 +40,8 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         echo "will NOT generate stubs for ${target_platform}"
     else
         echo "WILL generate stubs on ${target_platform}"
-        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi"
-        touch "$SP_DIR/pyoxigraph/py.typed"
+        "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi" \
+            && touch "$SP_DIR/pyoxigraph/py.typed" \
+            || echo "failed to generate stubs, proceeeding anyway"
     fi
 fi
