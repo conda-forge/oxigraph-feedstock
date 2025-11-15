@@ -17,6 +17,8 @@ source:
 
 build:
   number: 1
+  # segfaults under python 3.14
+  skip: true  # [py >= 314]
 
 requirements:
   build:
