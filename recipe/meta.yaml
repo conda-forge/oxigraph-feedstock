@@ -81,8 +81,8 @@ outputs:
         - zstd                      # [not (win or build_platform != target_platform)]
     test:
       commands:
-        - oxigraph --version
-        - oxigraph --help
+        - oxigraph_server --version
+        - oxigraph_server --help
     about:
       home: https://oxigraph.org
       summary: a SPARQL database and RDF toolkit
@@ -148,7 +148,6 @@ outputs:
         - python/THIRDPARTY.yml
       dev_url: https://github.com/oxigraph/oxigraph/tree/main/python
       doc_url: https://pyoxigraph.readthedocs.io
-
 
 about:
   home: https://oxigraph.org
