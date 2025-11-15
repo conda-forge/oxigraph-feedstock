@@ -42,6 +42,6 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         echo "WILL generate stubs on ${target_platform}"
         "${PYTHON}" generate_stubs.py pyoxigraph "$SP_DIR/pyoxigraph/__init__.pyi" \
             && touch "$SP_DIR/pyoxigraph/py.typed" \
-            echo "failed to generate stubs, proceeeding anyway"
+            || echo "failed to generate stubs, proceeeding anyway"
     fi
 fi
