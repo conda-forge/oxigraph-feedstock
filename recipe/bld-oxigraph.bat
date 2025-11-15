@@ -9,7 +9,7 @@ mkdir "%TEMP%"
 rustc --version
 
 IF "%PKG_NAME%" == "oxigraph-server" (
-   cd "%SRC_DIR%\cli"
+   cd "%SRC_DIR%\server"
 
    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml ^
       || exit 1
