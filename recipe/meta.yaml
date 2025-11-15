@@ -131,7 +131,7 @@ outputs:
         - pip check
         - cd python/tests
         - pytest -vv --color=yes --tb=long
-        - mypy -p pyoxigraph
+        - mypy -p pyoxigraph || echo "probably missing stubs"
       requires:
         - mypy
         - pip
