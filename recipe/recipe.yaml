@@ -23,10 +23,9 @@ outputs:
       name: oxigraph-server
     build:
       # build `oxigraph-server` once
-      skip: skip_oxigraph_server
+      skip: not (build_oxigraph_server and match(python, "3.12.*"))
       script:
         file: build-oxigraph
-
     requirements:
       build:
         - ${{ compiler("c") }}
@@ -83,6 +82,7 @@ outputs:
   - package:
       name: pyoxigraph
     build:
+      skip: build_oxgraph_server
       script:
         file: build-oxigraph
     requirements:
