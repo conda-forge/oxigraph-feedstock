@@ -1,6 +1,6 @@
 build_oxigraph_server:
-- false
-- true
+- ''
+- '1'
 c_compiler:
 - gcc
 c_compiler_version:

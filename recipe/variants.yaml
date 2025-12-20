@@ -7,5 +7,5 @@ MACOSX_SDK_VERSION:
     then:
       - "10.14"
 build_oxigraph_server:
-  - "false"
-  - "true"
+  - ""
+  - "1"

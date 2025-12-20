@@ -3,8 +3,8 @@ MACOSX_DEPLOYMENT_TARGET:
 MACOSX_SDK_VERSION:
 - '10.14'
 build_oxigraph_server:
-- false
-- true
+- ''
+- '1'
 c_compiler:
 - clang
 c_compiler_version:

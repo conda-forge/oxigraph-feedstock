@@ -6,6 +6,7 @@ context:
   version: 0.5.3-post.1
   maturin_min: "1.0"
   maturin_max: "2.0"
+  build_number: 0
 
 recipe:
   name: oxigraph-split
@@ -16,7 +17,7 @@ source:
   sha256: da33beb954903d07de21bcdbd8746298781b6f95570d9351c1bef5747c4a1f18
 
 build:
-  number: 0
+  number: ${{ build_number }}
 
 outputs:
   - package:
@@ -84,7 +85,6 @@ outputs:
   - package:
       name: pyoxigraph
     build:
-      skip: build_oxgraph_server
       script:
         file: build-oxigraph
     requirements:

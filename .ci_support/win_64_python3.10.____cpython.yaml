@@ -1,6 +1,6 @@
 build_oxigraph_server:
-- false
-- true
+- ''
+- '1'
 c_compiler:
 - vs2022
 c_stdlib:
