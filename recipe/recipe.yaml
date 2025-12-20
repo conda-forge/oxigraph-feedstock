@@ -1,0 +1,169 @@
+# try to avoid bot mangling
+# avoid selectors in output `script` for _other_ bot
+schema_version: 1
+
+context:
+  version: 0.5.3-post.1
+  maturin_min: "1.0"
+  maturin_max: "2.0"
+
+recipe:
+  name: oxigraph-split
+  version: ${{ version | replace("-post.", ".post") }}
+
+source:
+  url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
+  sha256: da33beb954903d07de21bcdbd8746298781b6f95570d9351c1bef5747c4a1f18
+
+build:
+  number: 0
+
+outputs:
+  - package:
+      name: oxigraph-server
+    build:
+      # build `oxigraph-server` once
+      skip: skip_oxigraph_server
+      script:
+        file: build-oxigraph
+
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+      host:
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - openssl
+            - zstd
+      run:
+        - ca-certificates
+        - if: unix
+          then:
+            - openssl
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+      ignore_run_exports:
+        by_name:
+          - python
+          - python_abi
+
+    tests:
+      - script:
+          - oxigraph --version
+          - oxigraph --help
+    about:
+      summary: a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - cli/THIRDPARTY.yml
+      homepage: https://oxigraph.org
+      repository: https://github.com/oxigraph/oxigraph
+
+  - package:
+      name: pyoxigraph
+    build:
+      script:
+        file: build-oxigraph
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("rust") }}
+        - ${{ stdlib("c") }}
+        - cargo-bundle-licenses
+        - if: win
+          then:
+            - libclang
+            - llvm
+            - llvm-tools
+        - if: not osx
+          then:
+            - clangdev
+            - llvmdev
+        - if: not (win or build_platform != target_platform)
+          then:
+            - pkg-config
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - python
+            - maturin >=${{ maturin_min }},<${{ maturin_max }}
+      host:
+        - pip
+        - python
+        - maturin >=${{ maturin_min }},<${{ maturin_max }}
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+      run:
+        - ca-certificates
+        - python
+        - if: not (win or build_platform != target_platform)
+          then:
+            - rocksdb
+            - zstd
+    tests:
+      - python:
+          imports: pyoxigraph
+          pip_check: true
+      - files:
+          recipe:
+            - test_licenses.py
+          source:
+            - python/tests/
+        requirements:
+          run:
+            - mypy
+            - pytest
+        script:
+          - cd python/tests
+          - pytest -vv --color=yes --tb=long
+          - mypy -p pyoxigraph
+    about:
+      summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
+      license: Apache-2.0 OR MIT
+      license_file:
+        - LICENSE-APACHE
+        - LICENSE-MIT
+        - python/THIRDPARTY.yml
+      homepage: https://oxigraph.org
+      repository: https://github.com/oxigraph/oxigraph/tree/main/python
+      documentation: https://pyoxigraph.readthedocs.io
+
+about:
+  summary: a SPARQL database and RDF toolkit
+  license: Apache-2.0 OR MIT
+  license_file:
+    - LICENSE-APACHE
+    - LICENSE-MIT
+  homepage: https://oxigraph.org
+  repository: https://github.com/oxigraph/oxigraph
+  documentation: https://oxigraph.org
+
+extra:
+  feedstock-name: oxigraph
+  recipe-maintainers:
+    - Tpt
+    - bollwyvl
