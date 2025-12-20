@@ -25,7 +25,7 @@ outputs:
       # build `oxigraph-server` once
       skip: not (build_oxigraph_server and match(python, "3.12.*"))
       # avoid `py3x` in the build names
-      string: ${{ hash }}_${{ build_number }}
+      string: h${{ hash }}_${{ build_number }}
       script:
         file: build-oxigraph
     requirements:
