@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eux
 
+export CARGO_PROFILE_RELEASE_STRIP=symbols
 export "OPENSSL_DIR=${PREFIX}"
 export "ROCKSDB_DIR=${PREFIX}"
 
