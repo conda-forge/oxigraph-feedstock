@@ -14,4 +14,6 @@ conda_install_tool: pixi
 github:
   branch_name: main
   tooling_branch_name: main
+shellcheck:
+  enabled: true
 test: native_and_emulated

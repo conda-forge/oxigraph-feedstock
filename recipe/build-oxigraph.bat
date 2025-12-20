@@ -12,7 +12,7 @@ IF "%PKG_NAME%" == "oxigraph-server" (
    cd "%SRC_DIR%\cli"
 
    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml ^
-      || exit 1
+      || exit 2
 
    cargo install ^
       --locked ^
@@ -20,28 +20,28 @@ IF "%PKG_NAME%" == "oxigraph-server" (
       --profile release ^
       --root "%LIBRARY_PREFIX%" ^
       --path . ^
-      || exit 1
+      || exit 3
 )
 
 IF "%PKG_NAME%" == "pyoxigraph" (
    cd "%SRC_DIR%\python"
 
    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml ^
-      || exit 1
+      || exit 4
 
    "%PYTHON%" -m pip install . ^
       -vv ^
       --no-build-isolation ^
       --no-deps ^
       --disable-pip-version-check ^
-      || exit 1
+      || exit 5
 
    chcp 65001
 
    "%PYTHON%" generate_stubs.py pyoxigraph "%SP_DIR%\pyoxigraph\__init__.pyi" ^
-      || exit 1
+      || exit 6
 
    copy /b NUL "%SP_DIR%\pyoxigraph\py.typed" ^
-      || exit 1
+      || exit 7
 
 )
