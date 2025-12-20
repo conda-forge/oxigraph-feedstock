@@ -6,6 +6,3 @@ MACOSX_SDK_VERSION:
   - if: osx and x86_64
     then:
       - "10.14"
-build_oxigraph_server:
-  - ""
-  - "1"
