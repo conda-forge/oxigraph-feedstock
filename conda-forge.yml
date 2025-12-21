@@ -3,13 +3,17 @@ azure:
     variables:
       CONDA_BLD_PATH: C:\\bld\\
   store_build_artifacts: true
+  free_disk_space: true
 build_platform:
   osx_arm64: osx_64
 conda_build:
   pkg_format: '2'
+conda_build_tool: rattler-build
 conda_forge_output_validation: true
 conda_install_tool: pixi
 github:
   branch_name: main
   tooling_branch_name: main
+shellcheck:
+  enabled: true
 test: native_and_emulated
