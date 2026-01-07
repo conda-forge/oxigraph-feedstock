@@ -1,9 +1,9 @@
 azure:
+  free_disk_space: true
   settings_win:
     variables:
       CONDA_BLD_PATH: C:\\bld\\
   store_build_artifacts: true
-  free_disk_space: true
 build_platform:
   osx_arm64: osx_64
 conda_build:

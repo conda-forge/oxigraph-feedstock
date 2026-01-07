@@ -6,7 +6,7 @@ context:
   version: 0.5.3-post.1
   maturin_min: "1.0"
   maturin_max: "2.0"
-  build_number: 0
+  build_number: 1
 
 recipe:
   name: oxigraph-split
