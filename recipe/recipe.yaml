@@ -3,10 +3,10 @@
 schema_version: 1
 
 context:
-  version: 0.5.3-post.1
+  version: "0.5.4"
   maturin_min: "1.0"
   maturin_max: "2.0"
-  build_number: 1
+  build_number: 0
 
 recipe:
   name: oxigraph-split
@@ -14,7 +14,7 @@ recipe:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-  sha256: da33beb954903d07de21bcdbd8746298781b6f95570d9351c1bef5747c4a1f18
+  sha256: 7f335ce4457abc73eb1be22c05708581314182e01c6bafafd18334e3c09358f5
 
 build:
   number: ${{ build_number }}
