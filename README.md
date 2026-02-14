@@ -20,7 +20,7 @@ Documentation: https://oxigraph.org/
 About pyoxigraph
 ----------------
 
-Home: https://oxigraph.org/
+Home: https://pypi.org/project/pyoxigraph
 
 Package license: Apache-2.0 OR MIT
 
