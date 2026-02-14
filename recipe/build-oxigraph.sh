@@ -23,26 +23,5 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
 fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
-    cd "${SRC_DIR}/python"
-
-    if [[ "${target_platform}" == "${build_platform}" ]]; then
-        export MATURIN_BUILD_ARGS="${MATURIN_BUILD_ARGS} --features=rocksdb-pkg-config"
-    fi
-
-    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-
-    "${PYTHON}" -m pip install . \
-        -vv \
-        --no-build-isolation \
-        --no-deps \
-        --disable-pip-version-check \
-        --config-settings "build-args=${MATURIN_BUILD_ARGS}"
-
-    if [[ "${target_platform}" != "${build_platform}" ]]; then
-        echo "will NOT generate stubs for ${target_platform}"
-    else
-        echo "WILL generate stubs on ${target_platform}"
-        "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
-        touch "${SP_DIR}/pyoxigraph/py.typed"
-    fi
+    "${PYTHON}" "${RECIPE_DIR}/build-pyoxigraph.py"
 fi

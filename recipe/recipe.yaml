@@ -8,6 +8,14 @@ context:
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
+  # abi3 audit
+  abi3_ext: ${{ "pyd" if win else "abi3.so" }}
+  unix_sp_dir: |-
+    $(python -c "print(__import__('site').getsitepackages()[-1])")/pyoxigraph
+  win_sp_dir: |-
+    Lib\site-packages\pyoxigraph
+  sp_dir: |-
+    ${{ "%PREFIX%\\" ~ win_sp_dir if win else unix_sp_dir }}
 
 recipe:
   name: oxigraph-split
@@ -84,8 +92,6 @@ outputs:
         version_independent: ${{ is_abi3 }}
       script:
         file: build-oxigraph
-        env:
-          MATURIN_BUILD_ARGS: ${{ "--features=abi3" if is_abi3 }}
     requirements:
       build:
         - ${{ compiler("c") }}
@@ -144,7 +150,14 @@ outputs:
           - python:
               imports: pyoxigraph
               pip_check: true
-      # TODO: add `abiaudit`
+      - if: is_abi3
+        then:
+          requirements:
+            run:
+              - abi3audit
+          script:
+            - cd ${{ sp_dir }}
+            - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} pyoxigraph.${{ abi3_ext }}
       - files:
           recipe:
             - test_licenses.py
@@ -168,7 +181,7 @@ outputs:
         - LICENSE-APACHE
         - LICENSE-MIT
         - python/THIRDPARTY.yml
-      homepage: https://oxigraph.org
+      homepage: https://pypi.org/project/pyoxigraph
       repository: https://github.com/oxigraph/oxigraph/tree/main/python
       documentation: https://pyoxigraph.readthedocs.io
 
