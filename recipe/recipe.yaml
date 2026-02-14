@@ -4,6 +4,7 @@ schema_version: 1
 
 context:
   version: "0.5.5"
+  build_number: 0
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -17,15 +18,13 @@ source:
   sha256: 2b014229b96fdfdfc0e0269a39ac163ecb6628c7d6ca70daadaf8ad11dc6ba0d
 
 build:
-  number: 0
+  number: ${{ build_number }}
 
 outputs:
   - package:
       name: oxigraph-server
     build:
       skip: not is_python_min
-      # avoid `py3x` in the build names
-      string: h${{ hash }}_${{ build_number }}
       script:
         file: build-oxigraph
     requirements:
