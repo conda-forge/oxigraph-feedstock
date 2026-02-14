@@ -5,25 +5,29 @@
 jobs:
 - job: osx
   pool:
-    vmImage: macOS-15
+    vmImage: $(VMIMAGE)
   strategy:
     matrix:
       osx_64_is_python_minfalse:
         CONFIG: osx_64_is_python_minfalse
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_is_python_minfalse
+        VMIMAGE: macOS-15
       osx_64_is_python_mintrue:
         CONFIG: osx_64_is_python_mintrue
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_is_python_mintrue
+        VMIMAGE: macOS-15
       osx_arm64_is_python_minfalse:
         CONFIG: osx_arm64_is_python_minfalse
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_is_python_minfalse
+        VMIMAGE: macOS-15
       osx_arm64_is_python_mintrue:
         CONFIG: osx_arm64_is_python_mintrue
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_is_python_mintrue
+        VMIMAGE: macOS-15
   timeoutInMinutes: 360
   variables: {}
 
