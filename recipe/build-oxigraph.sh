@@ -14,7 +14,7 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
 
     cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
-    cargo install \
+    cargo auditable install \
         --locked \
         --no-track \
         --profile release \
@@ -25,8 +25,10 @@ fi
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     cd "${SRC_DIR}/python"
 
+    export MATURIN_SETUP_ARGS="--features abi3"
+
     if [[ "${target_platform}" == "${build_platform}" ]]; then
-        export MATURIN_SETUP_ARGS="--features=rocksdb-pkg-config"
+        export MATURIN_SETUP_ARGS="${MATURIN_SETUP_ARGS} --features=rocksdb-pkg-config"
     fi
 
     cargo-bundle-licenses --format yaml --output THIRDPARTY.yml

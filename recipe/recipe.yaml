@@ -3,10 +3,10 @@
 schema_version: 1
 
 context:
-  version: "0.5.4"
+  version: "0.5.5"
   maturin_min: "1.0"
   maturin_max: "2.0"
-  build_number: 0
+  python_check_max: "3.14"
 
 recipe:
   name: oxigraph-split
@@ -14,17 +14,16 @@ recipe:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-  sha256: 7f335ce4457abc73eb1be22c05708581314182e01c6bafafd18334e3c09358f5
+  sha256: 2b014229b96fdfdfc0e0269a39ac163ecb6628c7d6ca70daadaf8ad11dc6ba0d
 
 build:
-  number: ${{ build_number }}
+  number: 0
 
 outputs:
   - package:
       name: oxigraph-server
     build:
-      # build `oxigraph-server` once
-      skip: not match(python, "3.12.*")
+      skip: not is_python_min
       # avoid `py3x` in the build names
       string: h${{ hash }}_${{ build_number }}
       script:
@@ -36,6 +35,7 @@ outputs:
         - ${{ compiler("rust") }}
         - ${{ stdlib("c") }}
         - cargo-bundle-licenses
+        - cargo-auditable
         - if: win
           then:
             - libclang
@@ -63,11 +63,6 @@ outputs:
           then:
             - rocksdb
             - zstd
-      ignore_run_exports:
-        by_name:
-          - python
-          - python_abi
-
     tests:
       - script:
           - oxigraph --version
@@ -85,6 +80,9 @@ outputs:
   - package:
       name: pyoxigraph
     build:
+      skip: is_abi3 and not is_python_min
+      python:
+        version_independent: ${{ is_abi3 }}
       script:
         file: build-oxigraph
     requirements:
@@ -119,6 +117,9 @@ outputs:
           then:
             - rocksdb
             - zstd
+        - if: is_abi3
+          then:
+            - python-abi3
       run:
         - ca-certificates
         - python
@@ -126,10 +127,16 @@ outputs:
           then:
             - rocksdb
             - zstd
+      ignore_run_exports:
+        from_package:
+          - cross-python_${{ target_platform }}
     tests:
       - python:
           imports: pyoxigraph
           pip_check: true
+          python_version:
+            - ${{ python_min }}.*
+            - ${{ python_check_max }}.*
       - files:
           recipe:
             - test_licenses.py
@@ -139,6 +146,9 @@ outputs:
           run:
             - mypy
             - pytest
+            - if: is_abi3
+              then:
+                - python ${{ python_min }}.*
         script:
           - cd python/tests
           - pytest -vv --color=yes --tb=long
