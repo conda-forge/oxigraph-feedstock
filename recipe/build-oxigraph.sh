@@ -23,9 +23,10 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
 fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
-    cd "${SRC_DIR}/python"
+    export MATURIN_SETUP_ARGS="--features=abi3"
+    export PY_SP_DIR=$("${PREFIX}/bin/python" -c 'import site;print(site.getsitepackages()[0])')
 
-    export MATURIN_SETUP_ARGS="--features abi3"
+    cd "${SRC_DIR}/python"
 
     if [[ "${target_platform}" == "${build_platform}" ]]; then
         export MATURIN_SETUP_ARGS="${MATURIN_SETUP_ARGS} --features=rocksdb-pkg-config"
@@ -43,7 +44,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         echo "will NOT generate stubs for ${target_platform}"
     else
         echo "WILL generate stubs on ${target_platform}"
-        "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
-        touch "${SP_DIR}/pyoxigraph/py.typed"
+        "${PYTHON}" generate_stubs.py pyoxigraph "${PY_SP_DIR}/pyoxigraph/__init__.pyi"
+        touch "${PY_SP_DIR}/pyoxigraph/py.typed"
     fi
 fi
