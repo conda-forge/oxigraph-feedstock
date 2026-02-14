@@ -59,9 +59,12 @@ def do(*args: Any) -> int:
     return rc
 
 
-def feature(name: str, when: bool) -> list[str]:
+def maturin_arg(arg: str):
+    return ["--config-settings", f"build-args={arg}"]
+
+def maturin_feature(name: str, when: bool) -> list[str]:
     """Add a feature."""
-    return ["--config-settings", f"build-args=--features={name}"] if when else []
+    return maturin_arg(f"--features={name}") if when else []
 
 
 def main() -> int:
@@ -69,8 +72,9 @@ def main() -> int:
     do(*DO_BUNDLE)
     do(
         *DO_INSTALL,
-        *feature("abi3", IS_ABI3),
-        *feature("rocksdb-pkg-config", IS_UNIX and not IS_CROSS),
+        *maturin_arg("--verbose"),
+        *maturin_feature("abi3", IS_ABI3),
+        *maturin_feature("rocksdb-pkg-config", IS_UNIX and not IS_CROSS),
     )
     if IS_CROSS:
         print(f"... can't build {PLAT_TGT} stubs on {PLAT_BLD}")

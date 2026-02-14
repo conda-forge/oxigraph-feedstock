@@ -16,6 +16,7 @@ IF "%PKG_NAME%" == "oxigraph-server" (
       || exit 2
 
    cargo install ^
+      --verbose ^
       --locked ^
       --no-track ^
       --profile release ^

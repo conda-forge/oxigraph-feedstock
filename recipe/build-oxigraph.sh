@@ -15,6 +15,7 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
     cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
     cargo auditable install \
+        --verbose \
         --locked \
         --no-track \
         --profile release \
