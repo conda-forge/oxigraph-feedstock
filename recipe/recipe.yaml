@@ -84,6 +84,8 @@ outputs:
         version_independent: ${{ is_abi3 }}
       script:
         file: build-oxigraph
+        env:
+          MATURIN_BUILD_ARGS: ${{ "--features=abi3" if is_abi3 }}
     requirements:
       build:
         - ${{ compiler("c") }}
@@ -130,12 +132,19 @@ outputs:
         from_package:
           - cross-python_${{ target_platform }}
     tests:
-      - python:
-          imports: pyoxigraph
-          pip_check: true
-          python_version:
-            - ${{ python_min }}.*
-            - ${{ python_check_max }}.*
+      - if: is_abi3
+        then:
+          - python:
+              imports: pyoxigraph
+              pip_check: true
+              python_version:
+                - ${{ python_min }}.*
+                - ${{ python_check_max }}.*
+        else:
+          - python:
+              imports: pyoxigraph
+              pip_check: true
+      # TODO: add `abiaudit`
       - files:
           recipe:
             - test_licenses.py

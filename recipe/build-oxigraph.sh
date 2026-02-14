@@ -23,12 +23,10 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
 fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
-    export MATURIN_SETUP_ARGS="--features=abi3"
-
     cd "${SRC_DIR}/python"
 
     if [[ "${target_platform}" == "${build_platform}" ]]; then
-        export MATURIN_SETUP_ARGS="${MATURIN_SETUP_ARGS} --features=rocksdb-pkg-config"
+        export MATURIN_BUILD_ARGS="${MATURIN_BUILD_ARGS} --features=rocksdb-pkg-config"
     fi
 
     cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
@@ -37,7 +35,8 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         -vv \
         --no-build-isolation \
         --no-deps \
-        --disable-pip-version-check
+        --disable-pip-version-check \
+        --config-settings "build-args=${MATURIN_BUILD_ARGS}"
 
     if [[ "${target_platform}" != "${build_platform}" ]]; then
         echo "will NOT generate stubs for ${target_platform}"

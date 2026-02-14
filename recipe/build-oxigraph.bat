@@ -25,8 +25,6 @@ IF "%PKG_NAME%" == "oxigraph-server" (
 )
 
 IF "%PKG_NAME%" == "pyoxigraph" (
-   set "MATURIN_SETUP_ARGS=--features=abi3"
-
    cd "%SRC_DIR%\python"
 
    cargo-bundle-licenses --format yaml --output THIRDPARTY.yml ^
@@ -37,6 +35,7 @@ IF "%PKG_NAME%" == "pyoxigraph" (
       --no-build-isolation ^
       --no-deps ^
       --disable-pip-version-check ^
+      --config-settings "build-args=%MATURIN_BUILD_ARGS%"
       || exit 5
 
    chcp 65001
