@@ -3,10 +3,19 @@
 schema_version: 1
 
 context:
-  version: "0.5.4"
+  version: "0.5.5"
+  build_number: 0
   maturin_min: "1.0"
   maturin_max: "2.0"
-  build_number: 0
+  python_check_max: "3.14"
+  # abi3 audit
+  abi3_ext: ${{ "pyd" if win else "abi3.so" }}
+  unix_sp_dir: |-
+    $(python -c "print(__import__('site').getsitepackages()[-1])")/pyoxigraph
+  win_sp_dir: |-
+    Lib\site-packages\pyoxigraph
+  sp_dir: |-
+    ${{ "%PREFIX%\\" ~ win_sp_dir if win else unix_sp_dir }}
 
 recipe:
   name: oxigraph-split
@@ -14,7 +23,7 @@ recipe:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-  sha256: 7f335ce4457abc73eb1be22c05708581314182e01c6bafafd18334e3c09358f5
+  sha256: 2b014229b96fdfdfc0e0269a39ac163ecb6628c7d6ca70daadaf8ad11dc6ba0d
 
 build:
   number: ${{ build_number }}
@@ -23,10 +32,7 @@ outputs:
   - package:
       name: oxigraph-server
     build:
-      # build `oxigraph-server` once
-      skip: not match(python, "3.12.*")
-      # avoid `py3x` in the build names
-      string: h${{ hash }}_${{ build_number }}
+      skip: not is_python_min
       script:
         file: build-oxigraph
     requirements:
@@ -36,6 +42,7 @@ outputs:
         - ${{ compiler("rust") }}
         - ${{ stdlib("c") }}
         - cargo-bundle-licenses
+        - cargo-auditable
         - if: win
           then:
             - libclang
@@ -63,11 +70,6 @@ outputs:
           then:
             - rocksdb
             - zstd
-      ignore_run_exports:
-        by_name:
-          - python
-          - python_abi
-
     tests:
       - script:
           - oxigraph --version
@@ -85,6 +87,9 @@ outputs:
   - package:
       name: pyoxigraph
     build:
+      skip: is_abi3 and not is_python_min
+      python:
+        version_independent: ${{ is_abi3 }}
       script:
         file: build-oxigraph
     requirements:
@@ -119,6 +124,9 @@ outputs:
           then:
             - rocksdb
             - zstd
+        - if: is_abi3
+          then:
+            - python-abi3
       run:
         - ca-certificates
         - python
@@ -126,10 +134,30 @@ outputs:
           then:
             - rocksdb
             - zstd
+      ignore_run_exports:
+        from_package:
+          - cross-python_${{ target_platform }}
     tests:
-      - python:
-          imports: pyoxigraph
-          pip_check: true
+      - if: is_abi3
+        then:
+          - python:
+              imports: pyoxigraph
+              pip_check: true
+              python_version:
+                - ${{ python_min }}.*
+                - ${{ python_check_max }}.*
+        else:
+          - python:
+              imports: pyoxigraph
+              pip_check: true
+      - if: is_abi3
+        then:
+          requirements:
+            run:
+              - abi3audit
+          script:
+            - cd ${{ sp_dir }}
+            - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} pyoxigraph.${{ abi3_ext }}
       - files:
           recipe:
             - test_licenses.py
@@ -139,6 +167,9 @@ outputs:
           run:
             - mypy
             - pytest
+            - if: is_abi3
+              then:
+                - python ${{ python_min }}.*
         script:
           - cd python/tests
           - pytest -vv --color=yes --tb=long
@@ -150,7 +181,7 @@ outputs:
         - LICENSE-APACHE
         - LICENSE-MIT
         - python/THIRDPARTY.yml
-      homepage: https://oxigraph.org
+      homepage: https://pypi.org/project/pyoxigraph
       repository: https://github.com/oxigraph/oxigraph/tree/main/python
       documentation: https://pyoxigraph.readthedocs.io
 
