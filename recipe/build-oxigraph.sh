@@ -24,7 +24,6 @@ fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
     export MATURIN_SETUP_ARGS="--features=abi3"
-    export PY_SP_DIR=$("${PREFIX}/bin/python" -c 'import site;print(site.getsitepackages()[0])')
 
     cd "${SRC_DIR}/python"
 
@@ -44,7 +43,7 @@ if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
         echo "will NOT generate stubs for ${target_platform}"
     else
         echo "WILL generate stubs on ${target_platform}"
-        "${PYTHON}" generate_stubs.py pyoxigraph "${PY_SP_DIR}/pyoxigraph/__init__.pyi"
-        touch "${PY_SP_DIR}/pyoxigraph/py.typed"
+        "${PYTHON}" generate_stubs.py pyoxigraph "${SP_DIR}/pyoxigraph/__init__.pyi"
+        touch "${SP_DIR}/pyoxigraph/py.typed"
     fi
 fi
