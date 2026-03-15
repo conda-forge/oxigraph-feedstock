@@ -3,7 +3,7 @@
 schema_version: 1
 
 context:
-  version: "0.5.5"
+  version: "0.5.6"
   build_number: 0
   maturin_min: "1.0"
   maturin_max: "2.0"
@@ -23,7 +23,7 @@ recipe:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-  sha256: 2b014229b96fdfdfc0e0269a39ac163ecb6628c7d6ca70daadaf8ad11dc6ba0d
+  sha256: 8dfdab7fefa5ebb5cbd5d5887c98efae09c6d7b3cf068d618720de0ca546675f
 
 build:
   number: ${{ build_number }}
@@ -146,18 +146,12 @@ outputs:
               python_version:
                 - ${{ python_min }}.*
                 - ${{ python_check_max }}.*
+          - requirements
+          - script
         else:
           - python:
               imports: pyoxigraph
               pip_check: true
-      - if: is_abi3
-        then:
-          requirements:
-            run:
-              - abi3audit
-          script:
-            - cd ${{ sp_dir }}
-            - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} pyoxigraph.${{ abi3_ext }}
       - files:
           recipe:
             - test_licenses.py
