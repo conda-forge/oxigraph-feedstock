@@ -74,13 +74,10 @@ def main() -> int:
         *DO_INSTALL,
         *maturin_arg("--verbose"),
         *maturin_feature("abi3", IS_ABI3),
-        *maturin_feature("rocksdb-pkg-config", IS_UNIX and not IS_CROSS),
+        *maturin_feature("rocksdb-pkg-config", IS_UNIX),
     )
-    if IS_CROSS:
-        print(f"... can't build {PLAT_TGT} stubs on {PLAT_BLD}")
-    else:
-        do(*DO_STUBS)
-        PY_TYPED.touch()
+    do(*DO_STUBS)
+    PY_TYPED.touch()
 
     return 0
 
