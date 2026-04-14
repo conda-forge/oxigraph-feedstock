@@ -17,7 +17,7 @@ jobs:
         CONFIG: osx_arm64_
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_
-        VMIMAGE: macOS-15
+        VMIMAGE: macOS-15-arm64
   timeoutInMinutes: 360
   variables: {}
 
