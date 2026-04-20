@@ -17,3 +17,7 @@ github:
   tooling_branch_name: main
 shellcheck:
   enabled: true
+remote_ci_setup:
+  - rattler-build !=0.62.2
+  - conda-build
+  - conda-forge-ci-setup

@@ -13,9 +13,9 @@ platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
 requires-pixi = ">=0.59.0"
 
 [dependencies]
-conda-build = ">=24.1"
-conda-forge-ci-setup = "4.*"
-rattler-build = "*"
+conda-build = "*"
+conda-forge-ci-setup = "*"
+rattler-build = "!=0.62.2"
 
 [tasks.inspect-all]
 cmd = "inspect_artifacts --all-packages"
