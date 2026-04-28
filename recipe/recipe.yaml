@@ -135,8 +135,6 @@ outputs:
               python_version:
                 - ${{ python_min }}.*
                 - ${{ python_check_max }}.*
-          - requirements
-          - script
         else:
           - python:
               imports: pyoxigraph
@@ -152,11 +150,17 @@ outputs:
             - pytest
             - if: is_abi3
               then:
+                - abi3audit
                 - python ${{ python_min }}.*
         script:
           - cd python/tests
           - pytest -vv --color=yes --tb=long
           - mypy -p pyoxigraph
+          - if: is_abi3
+            then:
+            - cd ${{ sp_dir }}
+            - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} pyoxigraph.${{ abi3_ext }}
+
     about:
       summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
       license: Apache-2.0 OR MIT
