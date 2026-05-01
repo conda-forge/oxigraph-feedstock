@@ -38,7 +38,7 @@ python:
 python_min:
 - '3.10'
 rocksdb:
-- '10.9'
+- '11.1'
 rust_compiler:
 - rust
 target_platform:
