@@ -3,7 +3,7 @@ schema_version: 1
 
 context:
   version: "0.5.8"
-  build_number: 0
+  build_number: 1
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -158,8 +158,8 @@ outputs:
           - mypy -p pyoxigraph
           - if: is_abi3
             then:
-            - cd ${{ sp_dir }}
-            - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} pyoxigraph.${{ abi3_ext }}
+              - cd ${{ sp_dir }}
+              - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} pyoxigraph.${{ abi3_ext }}
 
     about:
       summary: Python bindings of Oxigraph, a SPARQL database and RDF toolkit
