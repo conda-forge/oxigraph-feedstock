@@ -1,5 +1,5 @@
-azure:
-  free_disk_space: true
+workflow_settings:
+  free_disk_space: max
 provider:
   osx_arm64: default
   linux_aarch64: default
