@@ -2,8 +2,8 @@
 schema_version: 1
 
 context:
-  version: "0.5.8"
-  build_number: 2
+  version: "0.5.9"
+  build_number: 0
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -22,7 +22,7 @@ recipe:
 
 source:
   url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
-  sha256: c7f0f7dd7a2abd642850f338c62600840d992f9e40d9cd35ff51bd2c584e1fc6
+  sha256: 4db06760197875f0e85cab653eb2634ccafa32e55776c136be5462bec38d2635
 
 build:
   number: ${{ build_number }}
