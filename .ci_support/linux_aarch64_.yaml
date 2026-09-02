@@ -29,10 +29,10 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.11.* *_cpython
 - 3.14.* *_cp314t
 python_min:
-- '3.10'
+- '3.11'
 rocksdb:
 - '11.0'
 rust_compiler:
