@@ -26,5 +26,6 @@ IF "%PKG_NAME%" == "oxigraph-server" (
 )
 
 IF "%PKG_NAME%" == "pyoxigraph" (
+   copy "%RECIPE_DIR%\cargo-auditable-wrapper.bat" "%BUILD_PREFIX%\Library\bin"
    "%PYTHON%" "%RECIPE_DIR%\build-pyoxigraph.py" || exit 4
 )
