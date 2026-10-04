@@ -151,7 +151,7 @@ outputs:
         requirements:
           run:
             - pytest
-            - if: target_platform !== "win-arm64"
+            - if: target_platform != "win-arm64"
               then:
                 - mypy
             - if: is_abi3
@@ -161,7 +161,7 @@ outputs:
         script:
           - cd python/tests
           - pytest -vv --color=yes --tb=long
-          - if: target_platform !== "win-arm64"
+          - if: target_platform != "win-arm64"
             then:
               - mypy -p pyoxigraph
           - if: is_abi3
