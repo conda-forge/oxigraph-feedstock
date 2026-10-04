@@ -10,7 +10,8 @@ provider:
   win_arm64: default
   osx_arm64: default
   linux_aarch64: default
-  linux_riscv64: default
+  # rocksdb not yet available
+  # linux_riscv64: default
 shellcheck:
   enabled: true
 workflow_settings:
