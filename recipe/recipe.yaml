@@ -150,8 +150,10 @@ outputs:
             - python/tests/**
         requirements:
           run:
-            - mypy
             - pytest
+            - if: target_platform !== "win-arm64"
+              then:
+                - mypy
             - if: is_abi3
               then:
                 - abi3audit
@@ -159,7 +161,9 @@ outputs:
         script:
           - cd python/tests
           - pytest -vv --color=yes --tb=long
-          - mypy -p pyoxigraph
+          - if: target_platform !== "win-arm64"
+            then:
+              - mypy -p pyoxigraph
           - if: is_abi3
             then:
               - if: unix
