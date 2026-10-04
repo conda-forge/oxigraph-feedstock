@@ -4,6 +4,7 @@ c_stdlib:
 - vs
 channel_sources:
 - conda-forge
+- conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -30,4 +31,5 @@ target_platform:
 zip_keys:
 - - python
   - is_python_min
+  - channel_sources
   - is_abi3
