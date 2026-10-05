@@ -24,5 +24,8 @@ if [[ "${PKG_NAME}" == "oxigraph-server" ]]; then
 fi
 
 if [[ "${PKG_NAME}" == "pyoxigraph" ]]; then
+    mkdir -p "${BUILD_PREFIX}/bin/"
+    cp "${RECIPE_DIR}/cargo-auditable-wrapper.sh" "${BUILD_PREFIX}/bin/"
+    chmod 755 "${BUILD_PREFIX}/bin/cargo-auditable-wrapper.sh"
     "${PYTHON}" "${RECIPE_DIR}/build-pyoxigraph.py"
 fi
