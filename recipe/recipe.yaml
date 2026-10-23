@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.5.12"
+  version: "0.5.13"
   build_number: 0
   cargo_wrapper: cargo-auditable-wrapper.${{ "bat" if win else "sh" }}
   maturin_min: "1.0"
@@ -14,8 +14,8 @@ recipe:
   version: ${{ version | replace("-post.", ".post") }}
 
 source:
-  url: https://github.com/oxigraph/oxigraph/releases/download/${{ version }}/oxigraph_${{ version }}.tar.gz
-  sha256: b1c561b0a1dad96bc935ee672e3619846722ea4ce8869be634fb5d77a0ba283f
+  url: https://github.com/oxigraph/oxigraph/releases/download/v${{ version }}/oxigraph_v${{ version }}.tar.gz
+  sha256: 1c5f1f1dbe771f17c1997466d2e7852f26b87a237fd7330370692ca91108e1b2
 
 build:
   number: ${{ build_number }}
