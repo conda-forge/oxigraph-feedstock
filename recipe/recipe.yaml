@@ -46,7 +46,7 @@ outputs:
             - llvmdev
         - if: unix
           then:
-            - pkg-config
+            - pkgconf
       host:
         - if: unix
           then:
@@ -101,7 +101,7 @@ outputs:
             - llvmdev
         - if: unix
           then:
-            - pkg-config
+            - pkgconf
       host:
         - pip
         - python
